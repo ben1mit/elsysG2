@@ -1,0 +1,5 @@
+**/build/
+*.py
+/.metadata/
+**/sdkconfig
+**/sdkconfig.old
