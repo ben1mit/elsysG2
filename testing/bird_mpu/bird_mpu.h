@@ -10,7 +10,7 @@
 #define BIRD_IMPACT_LIMIT 100
 
 esp_err_t bird_mpu_init();
-
+bool check_collision();
 
 
 #endif 
