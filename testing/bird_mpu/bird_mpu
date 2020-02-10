@@ -1,0 +1,12 @@
+#include "I2Cbus.hpp"
+#include "MPU.hpp"        // main file, provides the class itself
+#include "mpu/math.hpp"   // math helper for dealing with MPU data
+#include "mpu/types.hpp"  // MPU data types and definitions
+
+
+MPU_t MPU;         // create an object
+
+mpud::raw_axes_t bird_accel_raw;     // holds x, y, z axes as int16
+
+int previous_acc=0;
+
