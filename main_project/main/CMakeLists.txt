@@ -1,6 +1,6 @@
 # Edit following two lines to set component requirements (see docs)
 set(COMPONENT_REQUIRES)
-set(COMPONENT_PRIV_REQUIRES my_mpu_wrapper)
+set(COMPONENT_PRIV_REQUIRES my_mpu_wrapper my_json_sender)
 
 set(COMPONENT_SRCS "main.c")
 set(COMPONENT_ADD_INCLUDEDIRS)
