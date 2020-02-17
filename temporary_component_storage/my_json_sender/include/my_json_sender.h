@@ -1,0 +1,6 @@
+#ifndef COMPONENTS_MY_JSON_SENDER_H_
+#define COMPONENTS_MY_JSON_SENDER_H_
+
+//#include "cJSON.h"
+
+#endif /* COMPONENTS_MY_JSON_SENDER_H_*/

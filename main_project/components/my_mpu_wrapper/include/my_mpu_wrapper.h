@@ -14,6 +14,8 @@ extern "C" {
 void knock_init(); 
 int check_dunk(); 
 
+int get_dunk_y();
+
 #ifdef __cplusplus
 }
 #endif

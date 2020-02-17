@@ -57,6 +57,11 @@ int check_dunk(){
 	return 0;
 }
 
+int get_dunk_y(){
+	MPU_dunk.acceleration(&accelRaw_dunk);  // fetch raw data from the registers
+    return accelRaw_dunk.z;
+}
+
 //annen info:
 
 //strengt tatt er det ikke lenger nødvedig å kompensere for jordakselerasjonen lenger, men jeg har valgt å beholde det.
