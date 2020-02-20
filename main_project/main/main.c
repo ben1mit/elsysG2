@@ -17,7 +17,5 @@ void app_main(void)
 	my_http_sender_send_turbine(3,40);
 	my_http_sender_send_turbine(9,16);
 	my_http_sender_send_turbine(4,32);
-
-
-	//set up task for sending. remember to delete task. 
+	//todo: set up task for sending. remember to delete task. 
 }
