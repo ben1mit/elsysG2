@@ -23,6 +23,8 @@
 #include "esp_bt_main.h"
 #include "ble_spp_server_demo.h"
 
+#include "my_http_sender.h" //NB! 
+
 #define GATTS_TABLE_TAG  "GATTS_SPP_DEMO"
 
 #define SPP_PROFILE_NUM             1
@@ -304,6 +306,7 @@ static void print_write_buffer(void)
     while(temp_spp_recv_data_node_p1 != NULL){
         uart_write_bytes(UART_NUM_0, (char *)(temp_spp_recv_data_node_p1->node_buff), temp_spp_recv_data_node_p1->len);
         temp_spp_recv_data_node_p1 = temp_spp_recv_data_node_p1->next_node;
+        printf("print_write_buffer called\n");// todo: remove.
     }
 }
 
@@ -507,7 +510,9 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
     	    res = find_char_and_desr_index(p_data->write.handle);
             if(p_data->write.is_prep == false){
                 ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_WRITE_EVT : handle = %d\n", res);
+                printf("write.is_prep = false: the data recieved is %d \n", res);// todo: change to logi and relay data.
                 if(res == SPP_IDX_SPP_COMMAND_VAL){
+                    printf("c1\n");
                     uint8_t * spp_cmd_buff = NULL;
                     spp_cmd_buff = (uint8_t *)malloc((spp_mtu_size - 3) * sizeof(uint8_t));
                     if(spp_cmd_buff == NULL){
@@ -518,6 +523,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                     memcpy(spp_cmd_buff,p_data->write.value,p_data->write.len);
                     xQueueSend(cmd_cmd_queue,&spp_cmd_buff,10/portTICK_PERIOD_MS);
                 }else if(res == SPP_IDX_SPP_DATA_NTF_CFG){
+                    printf("c2\n");
                     if((p_data->write.len == 2)&&(p_data->write.value[0] == 0x01)&&(p_data->write.value[1] == 0x00)){
                         enable_data_ntf = true;
                     }else if((p_data->write.len == 2)&&(p_data->write.value[0] == 0x00)&&(p_data->write.value[1] == 0x00)){
@@ -538,15 +544,19 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                 }
 #endif
                 else if(res == SPP_IDX_SPP_DATA_RECV_VAL){
+                    printf("c3\n");
 #ifdef SPP_DEBUG_MODE
                     esp_log_buffer_char(GATTS_TABLE_TAG,(char *)(p_data->write.value),p_data->write.len);
 #else
                     uart_write_bytes(UART_NUM_0, (char *)(p_data->write.value), p_data->write.len);
+                    my_http_sender_send_turbine(4, *(p_data->write.value)-48); //apperently the numbers are 48 off
 #endif
                 }else{
+                    printf("c4\n");
                     //TODO:
                 }
             }else if((p_data->write.is_prep == true)&&(res == SPP_IDX_SPP_DATA_RECV_VAL)){
+                printf("write.is_prep = true \n");// todo: change to logi and relay data.
                 ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_PREP_WRITE_EVT : handle = %d\n", res);
                 store_wr_buffer(p_data);
             }
