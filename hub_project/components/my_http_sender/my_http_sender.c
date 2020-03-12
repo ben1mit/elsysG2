@@ -42,13 +42,15 @@ extern const char howsmyssl_com_root_cert_pem_start[] asm("_binary_howsmyssl_com
 extern const char howsmyssl_com_root_cert_pem_end[]   asm("_binary_howsmyssl_com_root_cert_pem_end");
 
 //used in fill_my_http_buffer
-int my_send_buffer[10];// todo: calculate size
+int my_send_buffer[4];// todo: calculate size
 int buffer_index=0; 
-int char_count=0; 
+//int char_count=0; 
 const int json_padding_size = 30;
 
 const int max_digits_in_data_element = 10;
 const int max_digits_in_turb_num = 3;
+
+int buf_num=0; //the number to put in the buffer, has to be global due to parsing-reasons
 
 esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 {
@@ -280,16 +282,34 @@ void print_array(int arr[], int len){
 }
 
 
+//this function accepts only a digit at a time, and parses numbers splitted by commas.
 void fill_my_http_buffer(int new_measurement){ // todo: vurdere om denne skal flyttes. //husk at vi max kan sende 255 characters. 
+    //as it seems I can send one char at the time over bluetooth i should parse the chars here.
+    //todo: parse chars here. 
+    //the int new measurement is the ascii-code for the char sent.
+
+    if (new_measurement==44) // the ascii-code for "," 
+    {
+        my_send_buffer[buffer_index]=buf_num;
+        buffer_index++;
+        //char_count+= count_digits(buf_num); char count probably not necessary. could be used if there is a char limit for how much we can send with http.
+        printf("added %d to buffer \n",buf_num );
+        buf_num=0;
+        printf("got comma\n"); //for testing, todo: remove
+    }
+    else{
+        printf("partial num: %d \n", new_measurement);
+        buf_num=buf_num*10+(new_measurement); 
+    }
+
     if(buffer_index  >= sizeof(my_send_buffer)/sizeof(my_send_buffer[0])){ //char_count>=255-json_padding_size-max_digits_in_data_element-10){//10 is just to overkill //
         //todo: make if-statement more dynamic and elegant
         my_http_sender_send_turbine(TURBIN_ID, my_send_buffer, sizeof(my_send_buffer)/sizeof(my_send_buffer[0]));
         buffer_index=0;
-        char_count=0;
+        //char_count=0;
     }
-    my_send_buffer[buffer_index]=new_measurement;
-    buffer_index++;
-    char_count+= count_digits(new_measurement);
+
+
 }
 
 

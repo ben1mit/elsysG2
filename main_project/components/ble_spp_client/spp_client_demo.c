@@ -34,6 +34,8 @@
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 
+#include <math.h> // for pow.
+
 #define GATTC_TAG                   "GATTC_SPP_DEMO"
 #define PROFILE_NUM                 1
 #define PROFILE_APP_ID              0
@@ -552,19 +554,47 @@ void ble_client_appRegister(void)
 #endif
 }
 
-void my_client_send(int num_to_send){
+int count_digits(int n) 
+{ 
+    int count = 0; 
+    while (n != 0) { 
+        n = n / 10; 
+        ++count; 
+    } 
+    return count; 
+} 
 
+//this is my function for sending. It parses in correct format and then sends it. (splits the number into single digits and then adds "," sending one symbol at a time.)
+void my_client_send(int num_to_send){
     if((is_connect == true) && (db != NULL) && ((db+SPP_IDX_SPP_DATA_RECV_VAL)->properties & (ESP_GATT_CHAR_PROP_BIT_WRITE_NR | ESP_GATT_CHAR_PROP_BIT_WRITE)) ){
-        uint8_t temp_content= num_to_send + 48;
-        uint8_t * temp= NULL; 
-        temp = &temp_content;
+        uint8_t temp_content= num_to_send;
+        uint8_t * temp_ptr= NULL; 
+        temp_ptr = &temp_content;
+        
+        for(int i=count_digits(num_to_send); i>0; i--){ // converting char to int correctly is handled at reciever-side
+            temp_content = num_to_send/pow(10,i-1); //the first digit that hasnt already been sent. e.g. 6 in 6531
+            num_to_send = num_to_send % (int)pow(10,i-1); // removing the first digit e.g. 6531->531
+            printf("sending %d \n", temp_content);
+            esp_ble_gattc_write_char( spp_gattc_if,
+                                    spp_conn_id,
+                                    (db+SPP_IDX_SPP_DATA_RECV_VAL)->attribute_handle,
+                                    sizeof(uint8_t),
+                                    temp_ptr,
+                                    ESP_GATT_WRITE_TYPE_RSP,
+                                    ESP_GATT_AUTH_REQ_NONE);
+        }
+
+        //add the comma at the end
+        temp_content = 44; // ","
+        printf("sending comma\n");
         esp_ble_gattc_write_char( spp_gattc_if,
-                                spp_conn_id,
-                                (db+SPP_IDX_SPP_DATA_RECV_VAL)->attribute_handle,
-                                sizeof(uint8_t),
-                                temp,
-                                ESP_GATT_WRITE_TYPE_RSP,
-                                ESP_GATT_AUTH_REQ_NONE);
+                                    spp_conn_id,
+                                    (db+SPP_IDX_SPP_DATA_RECV_VAL)->attribute_handle,
+                                    sizeof(uint8_t),
+                                    temp_ptr,
+                                    ESP_GATT_WRITE_TYPE_RSP,
+                                    ESP_GATT_AUTH_REQ_NONE);
+
     }
     else{
         printf("bluetooth is in invalid state, cannot send yet. \n");
@@ -572,13 +602,12 @@ void my_client_send(int num_to_send){
 }
 
 /*
-    void uart_task(void *pvParameters)
+    void uart_task(void *pvParameters) 
     {
         uart_event_t event;
         for (;;) {
             //Waiting for UART event.
             if (xQueueReceive(spp_uart_queue, (void * )&event, (portTickType)portMAX_DELAY)) {
-                my_client_send(7);
                 switch (event.type) {
                 //Event of UART receving data
                 case UART_DATA:
@@ -668,7 +697,10 @@ void ble_client_app_main(void)
     ble_client_appRegister();
     //spp_uart_init();
     vTaskDelay(5000 / portTICK_PERIOD_MS);
-    my_client_send(5);
+    my_client_send(55);
     my_client_send(66);
-    my_client_send(7);
+    my_client_send(77);
+    my_client_send(88);
+    my_client_send(99);
+
 }

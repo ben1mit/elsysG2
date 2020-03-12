@@ -550,7 +550,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
 #else
                     uart_write_bytes(UART_NUM_0, (char *)(p_data->write.value), p_data->write.len);
                     //my_http_sender_send_turbine(4, *(p_data->write.value)-48); //apperently the numbers are 48 off //TODO: UNCOMMENT
-                    fill_my_http_buffer(*(p_data->write.value)-48);
+                    fill_my_http_buffer(*(p_data->write.value));
 #endif
                 }else{
                     printf("c4\n");
