@@ -2,16 +2,17 @@
 #include "my_mpu_wrapper.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "my_http_sender.h"
-#include "ble_spp_server_demo.h"
-
-
+//#include "ble_spp_server_demo.h"
+#include "spp_client_demo.h"
 
 void app_main(void)
 {
-	printf("printing from my_main\n");
-	ble_main();
+	ble_client_app_main();
+	//printf("printing from my_main\n");
+	//ble_main();
 	//http_sender_main();
+
+
 
 /*
 	my_http_sender_init();
