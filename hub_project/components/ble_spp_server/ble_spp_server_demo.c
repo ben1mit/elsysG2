@@ -549,7 +549,8 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
                     esp_log_buffer_char(GATTS_TABLE_TAG,(char *)(p_data->write.value),p_data->write.len);
 #else
                     uart_write_bytes(UART_NUM_0, (char *)(p_data->write.value), p_data->write.len);
-                    my_http_sender_send_turbine(4, *(p_data->write.value)-48); //apperently the numbers are 48 off
+                    //my_http_sender_send_turbine(4, *(p_data->write.value)-48); //apperently the numbers are 48 off //TODO: UNCOMMENT
+                    fill_my_http_buffer(*(p_data->write.value)-48);
 #endif
                 }else{
                     printf("c4\n");

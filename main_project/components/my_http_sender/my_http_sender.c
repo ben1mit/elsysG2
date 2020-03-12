@@ -88,7 +88,7 @@ static void http_rest_with_url(void)
     esp_http_client_handle_t client = esp_http_client_init(&config);
 
     // POST
-    const char *post_data = "{\"turbin\":11,\"verdier\":\"2\"}"; 
+    const char *post_data = "{\"turbin\":11,\"verdier\":\"6\"}"; 
     char *read_data = malloc(MAX_HTTP_RECV_BUFFER + 1); 
 
     esp_http_client_set_url(client, "https://www.vibecheck.no/esptest.php");
@@ -138,6 +138,7 @@ void my_http_sender_send_turbine(int turbin_id, int data){ // todo: should propa
     itoa(turbin_id, turb_num, 10); // ten is because we wat decimal format not binary
     itoa(data, verd_num, 10);
 
+    
     char* post_data = malloc( (strlen(turb)+strlen(verd)+strlen(verd_num)+strlen(turb_num)+strlen(closing)+1)*sizeof(char) ); // the string to send. //+1 because of nul-character.
     
     strcpy(post_data, turb);
@@ -145,6 +146,8 @@ void my_http_sender_send_turbine(int turbin_id, int data){ // todo: should propa
     strcat(post_data, verd); 
     strcat(post_data, verd_num); 
     strcat(post_data, closing);
+
+    
     //post_data example value: "{\"turbin\": 11,\"verdier\":\"2\"}"
     //printf(post_data); // // todo: change to ESP_LOGI 
   
