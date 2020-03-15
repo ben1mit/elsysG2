@@ -510,7 +510,7 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
     	    res = find_char_and_desr_index(p_data->write.handle);
             if(p_data->write.is_prep == false){
                 ESP_LOGI(GATTS_TABLE_TAG, "ESP_GATTS_WRITE_EVT : handle = %d\n", res);
-                printf("write.is_prep = false: the data recieved is %d \n", res);// todo: change to logi and relay data.
+                //printf("write.is_prep = false: the data recieved is %d \n", res);// todo: change to logi and relay data.
                 if(res == SPP_IDX_SPP_COMMAND_VAL){
                     printf("c1\n");
                     uint8_t * spp_cmd_buff = NULL;
@@ -550,7 +550,17 @@ static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_
 #else
                     uart_write_bytes(UART_NUM_0, (char *)(p_data->write.value), p_data->write.len);
                     //my_http_sender_send_turbine(4, *(p_data->write.value)-48); //apperently the numbers are 48 off //TODO: UNCOMMENT
-                    fill_my_http_buffer(*(p_data->write.value));
+                    if(SEND_IMMEDIATELY){
+                        int temp_arr[]={*(p_data->write.value)};
+                        printf("relaying %d \n", *(p_data->write.value));
+                        my_http_sender_send_turbine(TURBIN_ID, temp_arr, 1);//TURBIN_ID is defined in my_http_sender
+                    }
+                    else
+                    {
+                        fill_my_http_buffer_digit(*(p_data->write.value)); // uncomment in order to fill buffer with digits. 
+                    }
+                    
+
 #endif
                 }else{
                     printf("c4\n");

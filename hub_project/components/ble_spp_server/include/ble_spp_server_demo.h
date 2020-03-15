@@ -50,4 +50,8 @@ enum{
     SPP_IDX_NB,
 };
 
+
+#define SEND_IMMEDIATELY true //if this is the case we assume only a single digit is recieved, and no parsing needed
+                            // this controls what kind of sending-function is used.
+                            //it should be true if we immediately want to send that digit.
 void ble_main(void);

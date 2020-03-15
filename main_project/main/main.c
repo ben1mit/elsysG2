@@ -8,18 +8,22 @@
 void app_main(void)
 {
 	ble_client_app_main();
+
+	vTaskDelay(5000 / portTICK_PERIOD_MS); //necessary for initialization to settle.
+
+    my_client_send_single_digit(1);
+
+	vTaskDelay(10000 / portTICK_PERIOD_MS); //necessary for initialization to settle.
+   
+    my_client_send_single_digit(2);
+	
+	vTaskDelay(10000 / portTICK_PERIOD_MS); //necessary for initialization to settle.
+
+	my_client_send_single_digit(3);
+
 	//printf("printing from my_main\n");
 	//ble_main();
 	//http_sender_main();
 
-
-
-/*
-	my_http_sender_init();
-	printf("past init in main");
-	my_http_sender_send_turbine(3,40);
-	my_http_sender_send_turbine(9,16);
-	my_http_sender_send_turbine(4,32);
-*/
 	//todo: set up task for sending. remember to delete task. 
 }

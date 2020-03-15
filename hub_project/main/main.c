@@ -4,6 +4,8 @@
 #include "my_http_sender.h"
 #include "ble_spp_server_demo.h"
 
+// it might be relevant to change the defines in ble_spp_server.h for different kinds of testing and purpouses.
+//av en eller annen grunn relayer den bare 1 når send immediately er aktivert. 
 
 
 void app_main(void)

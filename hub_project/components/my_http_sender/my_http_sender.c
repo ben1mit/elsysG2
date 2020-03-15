@@ -21,8 +21,6 @@ This is based on the esp_http_client example from esp_idf
 
 #include "my_http_sender.h"
 
-#define TURBIN_ID 1
-
 #define MAX_HTTP_RECV_BUFFER 512
 static const char *TAG = "HTTP_CLIENT";
 
@@ -141,8 +139,6 @@ int count_digits(int n)
 
 void my_http_sender_send_turbine(int turbin_id, int data[], size_t data_len){ 
     //todo: make better error handling in this function
-    
-    
 
     //todo: find out whether this should be placed outside of function. 
     esp_http_client_config_t config = {
@@ -224,8 +220,8 @@ void my_http_sender_send_turbine(int turbin_id, int data[], size_t data_len){
     free(verd_num);
 
     esp_http_client_cleanup(client);
-
 }
+
 
 
 static void http_test_task(void *pvParameters)
@@ -283,7 +279,7 @@ void print_array(int arr[], int len){
 
 
 //this function accepts only a digit at a time, and parses numbers splitted by commas.
-void fill_my_http_buffer(int new_measurement){ // todo: vurdere om denne skal flyttes. //husk at vi max kan sende 255 characters. 
+void fill_my_http_buffer_digit(int new_measurement){ // todo: vurdere om denne skal flyttes. //husk at vi max kan sende 255 characters. 
     //as it seems I can send one char at the time over bluetooth i should parse the chars here.
     //todo: parse chars here. 
     //the int new measurement is the ascii-code for the char sent.

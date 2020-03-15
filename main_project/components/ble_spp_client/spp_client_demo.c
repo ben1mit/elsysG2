@@ -565,7 +565,7 @@ int count_digits(int n)
 } 
 
 //this is my function for sending. It parses in correct format and then sends it. (splits the number into single digits and then adds "," sending one symbol at a time.)
-void my_client_send(int num_to_send){
+void my_client_send_multiple_digits(int num_to_send){
     if((is_connect == true) && (db != NULL) && ((db+SPP_IDX_SPP_DATA_RECV_VAL)->properties & (ESP_GATT_CHAR_PROP_BIT_WRITE_NR | ESP_GATT_CHAR_PROP_BIT_WRITE)) ){
         uint8_t temp_content= num_to_send;
         uint8_t * temp_ptr= NULL; 
@@ -595,6 +595,34 @@ void my_client_send(int num_to_send){
                                     ESP_GATT_WRITE_TYPE_RSP,
                                     ESP_GATT_AUTH_REQ_NONE);
 
+    }
+    else{
+        printf("bluetooth is in invalid state, cannot send yet. \n");
+    }
+}
+
+//this is my function for sending. It parses in correct format and then sends it. (splits the number into single digits and then adds "," sending one symbol at a time.)
+void my_client_send_single_digit(int num_to_send){
+    if (count_digits(num_to_send)!=1)
+    {
+        printf("error: not trying to send exactly one digit\n");
+        return;
+    }
+
+    if((is_connect == true) && (db != NULL) && ((db+SPP_IDX_SPP_DATA_RECV_VAL)->properties & (ESP_GATT_CHAR_PROP_BIT_WRITE_NR | ESP_GATT_CHAR_PROP_BIT_WRITE)) ){
+        uint8_t temp_content= num_to_send;
+        uint8_t * temp_ptr= NULL; 
+        temp_ptr = &temp_content;
+        
+        printf("sending %d \n", temp_content);
+        esp_ble_gattc_write_char( spp_gattc_if,
+                                spp_conn_id,
+                                (db+SPP_IDX_SPP_DATA_RECV_VAL)->attribute_handle,
+                                sizeof(uint8_t),
+                                temp_ptr,
+                                ESP_GATT_WRITE_TYPE_RSP,
+                                ESP_GATT_AUTH_REQ_NONE);
+        
     }
     else{
         printf("bluetooth is in invalid state, cannot send yet. \n");
@@ -696,11 +724,4 @@ void ble_client_app_main(void)
     
     ble_client_appRegister();
     //spp_uart_init();
-    vTaskDelay(5000 / portTICK_PERIOD_MS);
-    my_client_send(55);
-    my_client_send(66);
-    my_client_send(77);
-    my_client_send(88);
-    my_client_send(99);
-
 }
