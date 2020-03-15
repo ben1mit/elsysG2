@@ -11,6 +11,23 @@ void app_main(void)
 
 	vTaskDelay(5000 / portTICK_PERIOD_MS); //necessary for initialization to settle.
 
+	knock_init(); 
+	int knock_counter=0;
+	while (true)
+	{
+		if(check_dunk()){
+			printf("dunk detected\n");
+    		my_client_send_single_digit(knock_counter%10);
+			vTaskDelay(2000 / portTICK_PERIOD_MS); //cooldown before checking next knock
+			knock_counter++;
+		}
+		vTaskDelay(50 / portTICK_PERIOD_MS);
+		
+	}
+	
+	check_dunk(); 
+
+
     my_client_send_single_digit(1);
 
 	vTaskDelay(10000 / portTICK_PERIOD_MS); //necessary for initialization to settle.
