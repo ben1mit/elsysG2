@@ -11,8 +11,12 @@ extern "C" {
 #define SCL GPIO_NUM_19
 #define CLOCK 100000
 
+#define CONFIG_MY_MPU_KNOCK_LIMIT 2000
+
 void knock_init(); 
 int check_dunk(); 
+
+int get_dunk_y();
 
 #ifdef __cplusplus
 }

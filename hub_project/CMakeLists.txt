@@ -9,4 +9,4 @@ set(SUPPORTED_TARGETS esp32)
 set(EXTRA_COMPONENT_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/main")
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(main-project)
+project(hub-project)

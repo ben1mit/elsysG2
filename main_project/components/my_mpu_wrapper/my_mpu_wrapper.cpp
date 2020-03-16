@@ -13,7 +13,7 @@
 
 #include "my_mpu_wrapper.h"
 
-#define CONFIG_MY_MPU_KNOCK_LIMIT 100
+#define CONFIG_MY_MPU_KNOCK_LIMIT 700
 
 MPU_t MPU_dunk;         // create an object
 
@@ -50,11 +50,16 @@ int check_dunk(){
 	MPU_dunk.rotation(&gyroRaw_dunk);       // fetch raw data from the registers
   
     if( abs(accelRaw_dunk.z-previous_acc) > CONFIG_MY_MPU_KNOCK_LIMIT){ // a single knock is detected
-        return 1;
+		previous_acc=accelRaw_dunk.z;
+		return 1;
     }
 	previous_acc=accelRaw_dunk.z;
-
 	return 0;
+}
+
+int get_dunk_y(){
+	MPU_dunk.acceleration(&accelRaw_dunk);  // fetch raw data from the registers
+    return accelRaw_dunk.z;
 }
 
 //annen info:
