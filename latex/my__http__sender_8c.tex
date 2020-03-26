@@ -1,0 +1,145 @@
+\hypertarget{my__http__sender_8c}{}\doxysection{hub\+\_\+project/components/my\+\_\+http\+\_\+sender/my\+\_\+http\+\_\+sender.c File Reference}
+\label{my__http__sender_8c}\index{hub\_project/components/my\_http\_sender/my\_http\_sender.c@{hub\_project/components/my\_http\_sender/my\_http\_sender.c}}
+
+
+implementation file for my\+\_\+http\+\_\+sender /$\ast$ AN E\+X\+A\+M\+P\+LE F\+I\+LE F\+OR S\+E\+N\+D\+I\+NG D\+A\+TA TO \char`\"{}https\+://www.\+vibecheck.\+no/esptest.\+php\char`\"{}, data is sent in json format with hhtp-\/post and formatted into a table at the webpage. It sends only once, when the function http\+\_\+rest\+\_\+with\+\_\+url(void) is called. This is based on the esp\+\_\+http\+\_\+client example from esp\+\_\+idf  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}freertos/\+Free\+R\+T\+O\+S.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}freertos/task.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+system.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}nvs\+\_\+flash.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+event.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+netif.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}protocol\+\_\+examples\+\_\+common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+tls.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+http\+\_\+client.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}my\+\_\+http\+\_\+sender.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a7332032cd2bf659b9f8c18d303d2b67b}\label{my__http__sender_8c_a7332032cd2bf659b9f8c18d303d2b67b}} 
+\#define {\bfseries M\+A\+X\+\_\+\+H\+T\+T\+P\+\_\+\+R\+E\+C\+V\+\_\+\+B\+U\+F\+F\+ER}~512
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a26219dde26b27998b3264e34b1b8baaa}\label{my__http__sender_8c_a26219dde26b27998b3264e34b1b8baaa}} 
+const char howsmyssl\+\_\+com\+\_\+root\+\_\+cert\+\_\+pem\+\_\+start\mbox{[}$\,$\mbox{]} {\bfseries asm} (\char`\"{}\+\_\+binary\+\_\+howsmyssl\+\_\+com\+\_\+root\+\_\+cert\+\_\+pem\+\_\+start\char`\"{})
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a657c56bd64386259041a22038af0318e}\label{my__http__sender_8c_a657c56bd64386259041a22038af0318e}} 
+const char howsmyssl\+\_\+com\+\_\+root\+\_\+cert\+\_\+pem\+\_\+end\mbox{[}$\,$\mbox{]} {\bfseries asm} (\char`\"{}\+\_\+binary\+\_\+howsmyssl\+\_\+com\+\_\+root\+\_\+cert\+\_\+pem\+\_\+end\char`\"{})
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_ae7c4f5057d30a650919c74c7f9e7d67c}\label{my__http__sender_8c_ae7c4f5057d30a650919c74c7f9e7d67c}} 
+esp\+\_\+err\+\_\+t {\bfseries \+\_\+http\+\_\+event\+\_\+handler} (esp\+\_\+http\+\_\+client\+\_\+event\+\_\+t $\ast$evt)
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_afa7cdd9a54a8944e8eefadf89ff9b552}\label{my__http__sender_8c_afa7cdd9a54a8944e8eefadf89ff9b552}} 
+int {\bfseries count\+\_\+digits} (int n)
+\item 
+void \mbox{\hyperlink{my__http__sender_8c_abe310355f3ccd6ab5bb6b7b33ac9a079}{my\+\_\+http\+\_\+sender\+\_\+send\+\_\+turbine}} (int turbin\+\_\+id, int data\mbox{[}$\,$\mbox{]}, size\+\_\+t data\+\_\+len)
+\begin{DoxyCompactList}\small\item\em function for sending data in json format to the database (\href{https://www.vibecheck.no/esptest.php}{\texttt{ https\+://www.\+vibecheck.\+no/esptest.\+php}}) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{my__http__sender_8c_a13234a168a61d6062bc50d87ceb7a099}\label{my__http__sender_8c_a13234a168a61d6062bc50d87ceb7a099}} 
+void \mbox{\hyperlink{my__http__sender_8c_a13234a168a61d6062bc50d87ceb7a099}{http\+\_\+sender\+\_\+main}} (void)
+\begin{DoxyCompactList}\small\item\em function solely used for testing \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{my__http__sender_8c_a0a663676a8d0e9bc7e5370bfe46e4c1c}\label{my__http__sender_8c_a0a663676a8d0e9bc7e5370bfe46e4c1c}} 
+void \mbox{\hyperlink{my__http__sender_8c_a0a663676a8d0e9bc7e5370bfe46e4c1c}{my\+\_\+http\+\_\+sender\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em initialization function for initializing wifi \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{my__http__sender_8c_a9743d32d52d5c91e82b40ffc49ce5c41}{print\+\_\+array}} (int arr\mbox{[}$\,$\mbox{]}, int len)
+\begin{DoxyCompactList}\small\item\em a function for printing an array (with printf), only for debugging \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{my__http__sender_8c_a95212498cf1a85a4f78379446284d3cf}{fill\+\_\+my\+\_\+http\+\_\+buffer\+\_\+digit}} (int new\+\_\+measurement)
+\begin{DoxyCompactList}\small\item\em a function for adding digits recieved in the format described in my\+\_\+client\+\_\+send\+\_\+multiple\+\_\+digits in main\+\_\+project to an http-\/buffer this does not add \char`\"{}new\+\_\+measurement\char`\"{} to the buffer. Instead it treats it as a single digit in a larger number, where all the numbers are seperated with commas. When the buffer is full it sends all its content using {\ttfamily my\+\_\+http\+\_\+sender\+\_\+send\+\_\+turbine} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a92d0dcfd68720b0cf929437f4deb3340}\label{my__http__sender_8c_a92d0dcfd68720b0cf929437f4deb3340}} 
+int {\bfseries my\+\_\+send\+\_\+buffer} \mbox{[}4\mbox{]}
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_ad780d57f5b10173e33a61a3b12b3e307}\label{my__http__sender_8c_ad780d57f5b10173e33a61a3b12b3e307}} 
+int {\bfseries buffer\+\_\+index} =0
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a505f6f6e75eb5ed012e17f773ced19d4}\label{my__http__sender_8c_a505f6f6e75eb5ed012e17f773ced19d4}} 
+const int {\bfseries json\+\_\+padding\+\_\+size} = 30
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a2b564ce4b67659fa4505748174c786db}\label{my__http__sender_8c_a2b564ce4b67659fa4505748174c786db}} 
+const int {\bfseries max\+\_\+digits\+\_\+in\+\_\+data\+\_\+element} = 10
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a0dac543fbe1d1859d44af54fac48aec2}\label{my__http__sender_8c_a0dac543fbe1d1859d44af54fac48aec2}} 
+const int {\bfseries max\+\_\+digits\+\_\+in\+\_\+turb\+\_\+num} = 3
+\item 
+\mbox{\Hypertarget{my__http__sender_8c_a41a64944f47d12da174f63e5a9e0d649}\label{my__http__sender_8c_a41a64944f47d12da174f63e5a9e0d649}} 
+int {\bfseries buf\+\_\+num} =0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+implementation file for my\+\_\+http\+\_\+sender /$\ast$ AN E\+X\+A\+M\+P\+LE F\+I\+LE F\+OR S\+E\+N\+D\+I\+NG D\+A\+TA TO \char`\"{}https\+://www.\+vibecheck.\+no/esptest.\+php\char`\"{}, data is sent in json format with hhtp-\/post and formatted into a table at the webpage. It sends only once, when the function http\+\_\+rest\+\_\+with\+\_\+url(void) is called. This is based on the esp\+\_\+http\+\_\+client example from esp\+\_\+idf 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{my__http__sender_8c_a95212498cf1a85a4f78379446284d3cf}\label{my__http__sender_8c_a95212498cf1a85a4f78379446284d3cf}} 
+\index{my\_http\_sender.c@{my\_http\_sender.c}!fill\_my\_http\_buffer\_digit@{fill\_my\_http\_buffer\_digit}}
+\index{fill\_my\_http\_buffer\_digit@{fill\_my\_http\_buffer\_digit}!my\_http\_sender.c@{my\_http\_sender.c}}
+\doxysubsubsection{\texorpdfstring{fill\_my\_http\_buffer\_digit()}{fill\_my\_http\_buffer\_digit()}}
+{\footnotesize\ttfamily void fill\+\_\+my\+\_\+http\+\_\+buffer\+\_\+digit (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+measurement }\end{DoxyParamCaption})}
+
+
+
+a function for adding digits recieved in the format described in my\+\_\+client\+\_\+send\+\_\+multiple\+\_\+digits in main\+\_\+project to an http-\/buffer this does not add \char`\"{}new\+\_\+measurement\char`\"{} to the buffer. Instead it treats it as a single digit in a larger number, where all the numbers are seperated with commas. When the buffer is full it sends all its content using {\ttfamily my\+\_\+http\+\_\+sender\+\_\+send\+\_\+turbine} 
+
+\begin{DoxyWarning}{Warning}
+this does not add \char`\"{}new\+\_\+measurement\char`\"{} to the buffer! 
+\end{DoxyWarning}
+
+
+Definition at line 285 of file my\+\_\+http\+\_\+sender.\+c.
+
+\mbox{\Hypertarget{my__http__sender_8c_abe310355f3ccd6ab5bb6b7b33ac9a079}\label{my__http__sender_8c_abe310355f3ccd6ab5bb6b7b33ac9a079}} 
+\index{my\_http\_sender.c@{my\_http\_sender.c}!my\_http\_sender\_send\_turbine@{my\_http\_sender\_send\_turbine}}
+\index{my\_http\_sender\_send\_turbine@{my\_http\_sender\_send\_turbine}!my\_http\_sender.c@{my\_http\_sender.c}}
+\doxysubsubsection{\texorpdfstring{my\_http\_sender\_send\_turbine()}{my\_http\_sender\_send\_turbine()}}
+{\footnotesize\ttfamily void my\+\_\+http\+\_\+sender\+\_\+send\+\_\+turbine (\begin{DoxyParamCaption}\item[{int}]{turbin\+\_\+id,  }\item[{int}]{data\mbox{[}$\,$\mbox{]},  }\item[{size\+\_\+t}]{data\+\_\+len }\end{DoxyParamCaption})}
+
+
+
+function for sending data in json format to the database (\href{https://www.vibecheck.no/esptest.php}{\texttt{ https\+://www.\+vibecheck.\+no/esptest.\+php}}) 
+
+example of json string sent with turbin\+\_\+id=1 and data=\mbox{[}34,2,6\mbox{]}\+: \{\char`\"{}turbin\char`\"{}\+: 1 , \char`\"{}verdier\char`\"{}\+: \char`\"{}34 2 6\char`\"{}\}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em turbin\+\_\+id} & a unique identifier for which windmill is sent from. \\
+\hline
+\mbox{\texttt{ in}}  & {\em data} & an array of ints to send \\
+\hline
+\mbox{\texttt{ in}}  & {\em data\+\_\+len} & the number of elements in data \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 143 of file my\+\_\+http\+\_\+sender.\+c.
+
+\mbox{\Hypertarget{my__http__sender_8c_a9743d32d52d5c91e82b40ffc49ce5c41}\label{my__http__sender_8c_a9743d32d52d5c91e82b40ffc49ce5c41}} 
+\index{my\_http\_sender.c@{my\_http\_sender.c}!print\_array@{print\_array}}
+\index{print\_array@{print\_array}!my\_http\_sender.c@{my\_http\_sender.c}}
+\doxysubsubsection{\texorpdfstring{print\_array()}{print\_array()}}
+{\footnotesize\ttfamily void print\+\_\+array (\begin{DoxyParamCaption}\item[{int}]{arr\mbox{[}$\,$\mbox{]},  }\item[{int}]{len }\end{DoxyParamCaption})}
+
+
+
+a function for printing an array (with printf), only for debugging 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em arr} & the array to be printed \\
+\hline
+\mbox{\texttt{ in}}  & {\em len} & the number of elements in the array \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 275 of file my\+\_\+http\+\_\+sender.\+c.
+

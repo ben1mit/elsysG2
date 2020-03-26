@@ -1,3 +1,8 @@
+/**
+ * @file 
+ * @brief implementation file for ble-sending library
+ */
+
 //nb: kan være at det burde være motsatt. At client budre sitte på huben og server burde sitte på vingen.
 
 /*

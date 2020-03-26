@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief implementation file for mpu-wrapper
+ */ 
+
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -13,7 +18,6 @@
 
 #include "my_mpu_wrapper.h"
 
-#define CONFIG_MY_MPU_KNOCK_LIMIT 700
 
 MPU_t MPU_dunk;         // create an object
 
@@ -57,7 +61,7 @@ int check_dunk(){
 	return 0;
 }
 
-int get_dunk_y(){
+int get_dunk_z(){
 	MPU_dunk.acceleration(&accelRaw_dunk);  // fetch raw data from the registers
     return accelRaw_dunk.z;
 }

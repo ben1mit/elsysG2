@@ -1,0 +1,83 @@
+\hypertarget{_i2_cbus_8cpp}{}\doxysection{main\+\_\+project/components/\+I2\+Cbus/src/\+I2\+Cbus.cpp File Reference}
+\label{_i2_cbus_8cpp}\index{main\_project/components/I2Cbus/src/I2Cbus.cpp@{main\_project/components/I2Cbus/src/I2Cbus.cpp}}
+
+
+implementation of I2c bus  
+
+
+{\ttfamily \#include \char`\"{}I2\+Cbus.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}sdkconfig.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+err.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}driver/i2c.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}driver/gpio.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_i2_cbus_8cpp_a7215be255ee5f4a3cedac47849b16b28}\label{_i2_cbus_8cpp_a7215be255ee5f4a3cedac47849b16b28}} 
+\#define {\bfseries I2\+C\+B\+U\+S\+\_\+\+L\+O\+GE}(format, ...)~E\+S\+P\+\_\+\+L\+O\+GE(T\+AG, format, \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)
+\item 
+\#define \mbox{\hyperlink{_i2_cbus_8cpp_ac2eea8445f1233dbbea456f577d5181c}{I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+A\+C\+K\+\_\+\+EN}}~true
+\item 
+\#define \mbox{\hyperlink{_i2_cbus_8cpp_a9f4e6d78d28f41a1f861b2022512612c}{I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+A\+C\+K\+\_\+\+D\+IS}}~false
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2\+C\+\_\+t}} \mbox{\hyperlink{_i2_cbus_8cpp_a169ecf273a21e59d61522712663d1878}{i2c0}} = \mbox{\hyperlink{classi2cbus_1_1_i2_c}{i2cbus\+::\+I2C}}(I2\+C\+\_\+\+N\+U\+M\+\_\+0)
+\item 
+\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2\+C\+\_\+t}} \mbox{\hyperlink{_i2_cbus_8cpp_a4df3b7890b24ee4fa1751dee900f45c0}{i2c1}} = \mbox{\hyperlink{classi2cbus_1_1_i2_c}{i2cbus\+::\+I2C}}(I2\+C\+\_\+\+N\+U\+M\+\_\+1)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+implementation of I2c bus 
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_i2_cbus_8cpp_a9f4e6d78d28f41a1f861b2022512612c}\label{_i2_cbus_8cpp_a9f4e6d78d28f41a1f861b2022512612c}} 
+\index{I2Cbus.cpp@{I2Cbus.cpp}!I2C\_MASTER\_ACK\_DIS@{I2C\_MASTER\_ACK\_DIS}}
+\index{I2C\_MASTER\_ACK\_DIS@{I2C\_MASTER\_ACK\_DIS}!I2Cbus.cpp@{I2Cbus.cpp}}
+\doxysubsubsection{\texorpdfstring{I2C\_MASTER\_ACK\_DIS}{I2C\_MASTER\_ACK\_DIS}}
+{\footnotesize\ttfamily \#define I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+A\+C\+K\+\_\+\+D\+IS~false}
+
+Disable ack check for master 
+
+Definition at line 50 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{_i2_cbus_8cpp_ac2eea8445f1233dbbea456f577d5181c}\label{_i2_cbus_8cpp_ac2eea8445f1233dbbea456f577d5181c}} 
+\index{I2Cbus.cpp@{I2Cbus.cpp}!I2C\_MASTER\_ACK\_EN@{I2C\_MASTER\_ACK\_EN}}
+\index{I2C\_MASTER\_ACK\_EN@{I2C\_MASTER\_ACK\_EN}!I2Cbus.cpp@{I2Cbus.cpp}}
+\doxysubsubsection{\texorpdfstring{I2C\_MASTER\_ACK\_EN}{I2C\_MASTER\_ACK\_EN}}
+{\footnotesize\ttfamily \#define I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+A\+C\+K\+\_\+\+EN~true}
+
+Enable ack check for master 
+
+Definition at line 49 of file I2\+Cbus.\+cpp.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{_i2_cbus_8cpp_a169ecf273a21e59d61522712663d1878}\label{_i2_cbus_8cpp_a169ecf273a21e59d61522712663d1878}} 
+\index{I2Cbus.cpp@{I2Cbus.cpp}!i2c0@{i2c0}}
+\index{i2c0@{i2c0}!I2Cbus.cpp@{I2Cbus.cpp}}
+\doxysubsubsection{\texorpdfstring{i2c0}{i2c0}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2\+C\+\_\+t}} i2c0 = \mbox{\hyperlink{classi2cbus_1_1_i2_c}{i2cbus\+::\+I2C}}(I2\+C\+\_\+\+N\+U\+M\+\_\+0)}
+
+port\+: I2\+C\+\_\+\+N\+U\+M\+\_\+0 
+
+Definition at line 58 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{_i2_cbus_8cpp_a4df3b7890b24ee4fa1751dee900f45c0}\label{_i2_cbus_8cpp_a4df3b7890b24ee4fa1751dee900f45c0}} 
+\index{I2Cbus.cpp@{I2Cbus.cpp}!i2c1@{i2c1}}
+\index{i2c1@{i2c1}!I2Cbus.cpp@{I2Cbus.cpp}}
+\doxysubsubsection{\texorpdfstring{i2c1}{i2c1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2\+C\+\_\+t}} i2c1 = \mbox{\hyperlink{classi2cbus_1_1_i2_c}{i2cbus\+::\+I2C}}(I2\+C\+\_\+\+N\+U\+M\+\_\+1)}
+
+port\+: I2\+C\+\_\+\+N\+U\+M\+\_\+1 
+
+Definition at line 59 of file I2\+Cbus.\+cpp.
+

@@ -1,0 +1,48 @@
+\hypertarget{my__mpu__wrapper_8cpp}{}\doxysection{main\+\_\+project/components/my\+\_\+mpu\+\_\+wrapper/my\+\_\+mpu\+\_\+wrapper.cpp File Reference}
+\label{my__mpu__wrapper_8cpp}\index{main\_project/components/my\_mpu\_wrapper/my\_mpu\_wrapper.cpp@{main\_project/components/my\_mpu\_wrapper/my\_mpu\_wrapper.cpp}}
+
+
+implementation file for mpu-\/wrapper  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}freertos/\+Free\+R\+T\+O\+S.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}freertos/task.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}I2\+Cbus.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}M\+P\+U.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mpu/math.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}mpu/types.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}my\+\_\+mpu\+\_\+wrapper.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_acc5b83b0150f6ab51324aa07c2819dec}\label{my__mpu__wrapper_8cpp_acc5b83b0150f6ab51324aa07c2819dec}} 
+void \mbox{\hyperlink{my__mpu__wrapper_8cpp_acc5b83b0150f6ab51324aa07c2819dec}{knock\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em initialization function for M\+PU. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_af516736e9629d5afa0e9ab4c947342d0}\label{my__mpu__wrapper_8cpp_af516736e9629d5afa0e9ab4c947342d0}} 
+int \mbox{\hyperlink{my__mpu__wrapper_8cpp_af516736e9629d5afa0e9ab4c947342d0}{check\+\_\+dunk}} ()
+\begin{DoxyCompactList}\small\item\em checks if the difference of two consequtive measurements (in z-\/direction) passes the threshold set in {\ttfamily C\+O\+N\+F\+I\+G\+\_\+\+M\+Y\+\_\+\+M\+P\+U\+\_\+\+K\+N\+O\+C\+K\+\_\+\+L\+I\+M\+IT} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_adfe5d69f6c5ea444c26f90a80c6961e3}\label{my__mpu__wrapper_8cpp_adfe5d69f6c5ea444c26f90a80c6961e3}} 
+int \mbox{\hyperlink{my__mpu__wrapper_8cpp_adfe5d69f6c5ea444c26f90a80c6961e3}{get\+\_\+dunk\+\_\+z}} ()
+\begin{DoxyCompactList}\small\item\em returns raw data of z-\/acceleration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_a2f7f3d484fb7bf7a07ad7657baa0d6ad}\label{my__mpu__wrapper_8cpp_a2f7f3d484fb7bf7a07ad7657baa0d6ad}} 
+M\+P\+U\+\_\+t {\bfseries M\+P\+U\+\_\+dunk}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_a4c52e118aae4bba9ed09ad92c3541d9f}\label{my__mpu__wrapper_8cpp_a4c52e118aae4bba9ed09ad92c3541d9f}} 
+mpud\+::raw\+\_\+axes\+\_\+t {\bfseries accel\+Raw\+\_\+dunk}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_a73a8cf3c9ed89953b62d184ba92bbe6f}\label{my__mpu__wrapper_8cpp_a73a8cf3c9ed89953b62d184ba92bbe6f}} 
+mpud\+::raw\+\_\+axes\+\_\+t {\bfseries gyro\+Raw\+\_\+dunk}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8cpp_affb9a588d53f191ed7442c4a45e0988c}\label{my__mpu__wrapper_8cpp_affb9a588d53f191ed7442c4a45e0988c}} 
+int {\bfseries previous\+\_\+acc} =0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+implementation file for mpu-\/wrapper 
+

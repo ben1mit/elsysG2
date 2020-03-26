@@ -1,0 +1,134 @@
+In Bluetooth classic (B\+R/\+E\+DR) systems, a Serial Port Profile (S\+PP) is an adopted profile defined by the Bluetooth Special Interest Group (S\+IG) used to emulate a serial port connection over a Bluetooth wireless connection. For B\+LE systems, an adopted S\+PP profile over B\+LE is not defined, thus emulation of a serial port must be implemented as a vendor-\/specific custom profile.
+
+This reference design consists of two Demos, the ble spp server and ble spp client that run on their respective endpoints. These devices connect and exchange data wirelessly with each other. This capability creates a virtual serial link over the air. Each byte input can be sent and received by both the server and client. The spp server is implemented as the \href{../ble_spp_server}{\texttt{ ble\+\_\+spp\+\_\+server}} demo while the spp client is implemented as the \href{../ble_spp_client}{\texttt{ ble\+\_\+spp\+\_\+client}} demo. Espressif designed the B\+LE S\+PP applications to use the U\+A\+RT transport layer but you could adapt this design to work with other serial protocols, such as S\+PI.
+
+This vendor-\/specific custom profile is implemented in \href{../ble_spp_client/main/spp_client_demo.c}{\texttt{ spp\+\_\+client\+\_\+demo.\+c}} and \href{../ble_spp_server/main/ble_spp_server_demo.c}{\texttt{ spp\+\_\+server\+\_\+demo.\+c}}.\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Using Examples}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md2}
+\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md3}{}\doxysubsection{Initialization}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md3}
+Both the server and client will first initialize the uart and ble. The server demo will set up the serial port service with standard G\+A\+TT and G\+AP services in the attribute server. The client demo will scan the ble broadcast over the air to find the spp server.\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md4}{}\doxysubsection{Event Processing}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md4}
+The spp server has two main event processing functions for B\+LE event\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void} gap\_event\_handler(esp\_gap\_ble\_cb\_event\_t event, esp\_ble\_gap\_cb\_param\_t * param);}
+\DoxyCodeLine{\textcolor{keywordtype}{void} gatts\_profile\_event\_handler(esp\_gatts\_cb\_event\_t event, esp\_gatt\_if\_t gatts\_if, esp\_ble\_gatts\_cb\_param\_t * param);}
+\end{DoxyCode}
+
+
+The spp client has two main event processing functions for B\+LE event\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{esp\_gap\_cb(esp\_gap\_ble\_cb\_event\_t event, esp\_ble\_gap\_cb\_param\_t * param);}
+\DoxyCodeLine{\textcolor{keywordtype}{void} gattc\_profile\_event\_handler(esp\_gattc\_cb\_event\_t event, esp\_gatt\_if\_t gattc\_if, esp\_ble\_gattc\_cb\_param\_t * param);}
+\end{DoxyCode}
+
+
+These are some queues and tasks used by S\+PP application\+:
+
+Queues\+:
+
+
+\begin{DoxyItemize}
+\item spp\+\_\+uart\+\_\+queue -\/ Uart data messages received from the Uart
+\item cmd\+\_\+cmd\+\_\+queue -\/ commands received from the client
+\item cmd\+\_\+heartbeat\+\_\+queue -\/ heartbeat received, if supported
+\end{DoxyItemize}
+
+Tasks\+:
+
+
+\begin{DoxyItemize}
+\item {\ttfamily uart\+\_\+task} -\/ process Uart
+\item {\ttfamily spp\+\_\+cmd\+\_\+task} -\/ process command messages, the commands and processing were defined by customer
+\item {\ttfamily spp\+\_\+heartbeat\+\_\+task} -\/ if heartbeat is supported, the task will send a heatbeat packet to the remote device
+\end{DoxyItemize}\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{Packet Structure}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md5}
+After the Uart received data, the data will be posted to Uart task. Then, in the U\+A\+R\+T\+\_\+\+D\+A\+TA event, the raw data may be retrieved. The max length is 120 bytes every time. If you run the ble spp demo with two E\+S\+P32 chips, the M\+TU size will be exchanged for 200 bytes after the ble connection is established, so every packet can be send directly. If you only run the ble\+\_\+spp\+\_\+server demo, and it was connected by a phone, the M\+TU size may be less than 123 bytes. In such a case the data will be split into fragments and send in turn. In every packet, we add 4 bytes to indicate that this is a fragment packet. The first two bytes contain \char`\"{}\#\#\char`\"{} if this is a fragment packet, the third byte is the total number of the packets, the fourth byte is the current number of this packet. The phone A\+PP need to check the structure of the packet if it want to communicate with the ble\+\_\+spp\+\_\+server demo.\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md6}{}\doxysubsection{Sending Data Wirelessly}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md6}
+The client will be sending Write\+No\+Rsp packets to the server. The server side sends data through notifications. When the Uart receives data, the Uart task places it in the buffer. If the size of the data is larger than (M\+TU size -\/ 3), the data will be split into packets and send in turn.\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{Receiving Data Wirelessly}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md7}
+The server will receive this data in the E\+S\+P\+\_\+\+G\+A\+T\+T\+S\+\_\+\+W\+R\+I\+T\+E\+\_\+\+E\+VT event and send data to the Uart terminal by {\ttfamily uart\+\_\+wrire\+\_\+bytes} function. For example\+:
+
+case E\+S\+P\+\_\+\+G\+A\+T\+T\+S\+\_\+\+W\+R\+I\+T\+E\+\_\+\+E\+VT\+: ... if(res == S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+C\+V\+\_\+\+V\+AL)\{ uart\+\_\+write\+\_\+bytes(U\+A\+R\+T\+\_\+\+N\+U\+M\+\_\+0, (char $\ast$)(p\+\_\+data-\/$>$write.\+value), p\+\_\+data-\/$>$write.\+len); \} ... break;\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md8}{}\doxysubsection{G\+A\+T\+T Server Attribute Table}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md8}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ charactertistic }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ U\+U\+ID }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Permissions  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ charactertistic }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ U\+U\+ID }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Permissions  }\\\cline{1-3}
+\endhead
+\PBS\centering S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+C\+V\+\_\+\+C\+H\+AR &\PBS\centering 0x\+A\+B\+F1 &\PBS\centering R\+E\+AD\&W\+R\+I\+T\+E\+\_\+\+NR  \\\cline{1-3}
+\PBS\centering S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+C\+H\+AR &\PBS\centering 0x\+A\+B\+F2 &\PBS\centering R\+E\+AD\&N\+O\+T\+I\+FY  \\\cline{1-3}
+\PBS\centering S\+P\+P\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+H\+AR &\PBS\centering 0x\+A\+B\+F3 &\PBS\centering R\+E\+AD\&W\+R\+I\+T\+E\+\_\+\+NR  \\\cline{1-3}
+\PBS\centering S\+P\+P\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+C\+H\+AR &\PBS\centering 0x\+A\+B\+F4 &\PBS\centering R\+E\+AD \& N\+O\+T\+I\+FY  \\\cline{1-3}
+\PBS\centering S\+P\+P\+\_\+\+H\+E\+A\+R\+T\+B\+E\+A\+T\+\_\+\+C\+H\+AR &\PBS\centering 0x\+A\+B\+F5 &\PBS\centering R\+E\+AD\&W\+R\+I\+T\+E\+\_\+\+NR\&N\+O\+T\+I\+FY  \\\cline{1-3}
+\end{longtabu}
+\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{Build and Flash}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md9}
+Build each project and flash it to the board, then run monitor tool to view serial output\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{idf.py -\/p PORT flash monitor}
+\end{DoxyCode}
+
+
+(To exit the serial monitor, type {\ttfamily Ctrl-\/\mbox{]}}.)
+
+See the Getting Started Guide for full steps to configure and use E\+S\+P-\/\+I\+DF to build projects.\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md10}{}\doxysection{Example Output}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md10}
+The spp cilent will auto connect to the spp server, do service search, exchange M\+TU size and register notification.\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md11}{}\doxysubsection{Client}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md11}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{I (2894) GATTC\_SPP\_DEMO: ESP\_GATTC\_CONNECT\_EVT: conn\_id=0, gatt\_if = 3}
+\DoxyCodeLine{I (2894) GATTC\_SPP\_DEMO: REMOTE BDA:}
+\DoxyCodeLine{I (2904) GATTC\_SPP\_DEMO: 00 00 00 00 00 00 }
+\DoxyCodeLine{I (2904) GATTC\_SPP\_DEMO: EVT 2, gattc if 3}
+\DoxyCodeLine{I (3414) GATTC\_SPP\_DEMO: EVT 7, gattc if 3}
+\DoxyCodeLine{I (3414) GATTC\_SPP\_DEMO: ESP\_GATTC\_SEARCH\_RES\_EVT: start\_handle = 40, end\_handle = 65535, UUID:0xabf0}
+\DoxyCodeLine{I (3424) GATTC\_SPP\_DEMO: EVT 6, gattc if 3}
+\DoxyCodeLine{I (3424) GATTC\_SPP\_DEMO: SEARCH\_CMPL: conn\_id = 0, status 0}
+\DoxyCodeLine{I (3464) GATTC\_SPP\_DEMO: EVT 18, gattc if 3}
+\DoxyCodeLine{I (3464) GATTC\_SPP\_DEMO: +MTU:200}
+\DoxyCodeLine{}
+\DoxyCodeLine{I (3464) GATTC\_SPP\_DEMO: attr\_type = PRIMARY\_SERVICE,attribute\_handle=40,start\_handle=40,end\_handle=65535,properties=0x0,uuid=0xabf0}
+\DoxyCodeLine{I (3474) GATTC\_SPP\_DEMO: attr\_type = CHARACTERISTIC,attribute\_handle=42,start\_handle=0,end\_handle=0,properties=0x6,uuid=0xabf1}
+\DoxyCodeLine{I (3484) GATTC\_SPP\_DEMO: attr\_type = CHARACTERISTIC,attribute\_handle=44,start\_handle=0,end\_handle=0,properties=0x12,uuid=0xabf2}
+\DoxyCodeLine{I (3494) GATTC\_SPP\_DEMO: attr\_type = DESCRIPTOR,attribute\_handle=45,start\_handle=0,end\_handle=0,properties=0x0,uuid=0x2902}
+\DoxyCodeLine{I (3504) GATTC\_SPP\_DEMO: attr\_type = CHARACTERISTIC,attribute\_handle=47,start\_handle=0,end\_handle=0,properties=0x6,uuid=0xabf3}
+\DoxyCodeLine{I (3524) GATTC\_SPP\_DEMO: attr\_type = CHARACTERISTIC,attribute\_handle=49,start\_handle=0,end\_handle=0,properties=0x12,uuid=0xabf4}
+\DoxyCodeLine{I (3534) GATTC\_SPP\_DEMO: attr\_type = DESCRIPTOR,attribute\_handle=50,start\_handle=0,end\_handle=0,properties=0x0,uuid=0x2902}
+\DoxyCodeLine{I (3544) GATTC\_SPP\_DEMO: Index = 2,UUID = 0xabf2, handle = 44 }
+\DoxyCodeLine{I (3554) GATTC\_SPP\_DEMO: EVT 38, gattc if 3}
+\DoxyCodeLine{I (3554) GATTC\_SPP\_DEMO: Index = 2,status = 0,handle = 44}
+\DoxyCodeLine{I (3594) GATTC\_SPP\_DEMO: EVT 9, gattc if 3}
+\DoxyCodeLine{I (3594) GATTC\_SPP\_DEMO: ESP\_GATTC\_WRITE\_DESCR\_EVT: status =0,handle = 45 }
+\DoxyCodeLine{I (3654) GATTC\_SPP\_DEMO: Index = 5,UUID = 0xabf4, handle = 49 }
+\DoxyCodeLine{I (3654) GATTC\_SPP\_DEMO: EVT 38, gattc if 3}
+\DoxyCodeLine{I (3654) GATTC\_SPP\_DEMO: Index = 5,status = 0,handle = 49}
+\DoxyCodeLine{I (3684) GATTC\_SPP\_DEMO: EVT 9, gattc if 3}
+\DoxyCodeLine{I (3684) GATTC\_SPP\_DEMO: ESP\_GATTC\_WRITE\_DESCR\_EVT: status =0,handle = 50 }
+\DoxyCodeLine{I (16904) GATTC\_SPP\_DEMO: EVT 10, gattc if 3}
+\DoxyCodeLine{I (16904) GATTC\_SPP\_DEMO: ESP\_GATTC\_NOTIFY\_EVT}
+\DoxyCodeLine{I (16904) GATTC\_SPP\_DEMO: +NOTIFY:handle = 44,length = 22}
+\end{DoxyCode}
+\hypertarget{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md12}{}\doxysubsection{Server}\label{md_main_project_components_ble_spp_client__r_e_a_d_m_e_autotoc_md12}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{I (4452) GATTS\_SPP\_DEMO: EVT 14, gatts if 3}
+\DoxyCodeLine{I (4452) GATTS\_SPP\_DEMO: event = e}
+\DoxyCodeLine{I (5022) GATTS\_SPP\_DEMO: EVT 4, gatts if 3}
+\DoxyCodeLine{I (5022) GATTS\_SPP\_DEMO: event = 4}
+\DoxyCodeLine{I (5152) GATTS\_SPP\_DEMO: EVT 2, gatts if 3}
+\DoxyCodeLine{I (5152) GATTS\_SPP\_DEMO: event = 2}
+\DoxyCodeLine{I (5152) GATTS\_SPP\_DEMO: ESP\_GATTS\_WRITE\_EVT : handle = 5}
+\DoxyCodeLine{I (5242) GATTS\_SPP\_DEMO: EVT 2, gatts if 3}
+\DoxyCodeLine{I (5242) GATTS\_SPP\_DEMO: event = 2}
+\DoxyCodeLine{I (5242) GATTS\_SPP\_DEMO: ESP\_GATTS\_WRITE\_EVT : handle = 10}
+\DoxyCodeLine{I (18462) GATTS\_SPP\_DEMO: EVT 5, gatts if 3}
+\DoxyCodeLine{I (18462) GATTS\_SPP\_DEMO: event = 5}
+\DoxyCodeLine{I (27652) GATTS\_SPP\_DEMO: EVT 2, gatts if 3}
+\DoxyCodeLine{I (27652) GATTS\_SPP\_DEMO: event = 2}
+\DoxyCodeLine{I (27652) GATTS\_SPP\_DEMO: ESP\_GATTS\_WRITE\_EVT : handle = 2}
+\end{DoxyCode}
+
+
+if you input data to the Uart terminal, it will be printed in the remote device Uart terminal. 

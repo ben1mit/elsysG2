@@ -1,3 +1,8 @@
+/**
+ * @file 
+ * @brief implementation of I2c bus
+ */
+
 /* =========================================================================
 I2Cbus library is placed under the MIT License
 Copyright 2017 Natanael Josue Rabello. All rights reserved.

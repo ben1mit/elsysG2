@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief I2C bus driver
+ */ 
+
 /* =========================================================================
 I2Cbus library is placed under the MIT License
 Copyright 2017 Natanael Josue Rabello. All rights reserved.

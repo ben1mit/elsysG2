@@ -1,0 +1,39 @@
+\hypertarget{my__mpu__wrapper_8h}{}\doxysection{main\+\_\+project/components/my\+\_\+mpu\+\_\+wrapper/include/my\+\_\+mpu\+\_\+wrapper.h File Reference}
+\label{my__mpu__wrapper_8h}\index{main\_project/components/my\_mpu\_wrapper/include/my\_mpu\_wrapper.h@{main\_project/components/my\_mpu\_wrapper/include/my\_mpu\_wrapper.h}}
+
+
+a wrapper library for the mpu, necessary since the M\+P\+U-\/driver is written in c++ here we also implement helper functions for detecting hits. documentation for the M\+P\+U-\/driver can be found here\+: \href{https://esp32-mpu-driver.readthedocs.io/en/latest/}{\texttt{ https\+://esp32-\/mpu-\/driver.\+readthedocs.\+io/en/latest/}} (the M\+P\+U-\/driver is a component in the project, but excluded from documentation as it has its own documentation)  
+
+
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_a6890442e1cc24a0d61597a13576b8727}\label{my__mpu__wrapper_8h_a6890442e1cc24a0d61597a13576b8727}} 
+\#define {\bfseries S\+DA}~G\+P\+I\+O\+\_\+\+N\+U\+M\+\_\+22
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_ab5ffc4751921608954bb7a5687566b2d}\label{my__mpu__wrapper_8h_ab5ffc4751921608954bb7a5687566b2d}} 
+\#define {\bfseries S\+CL}~G\+P\+I\+O\+\_\+\+N\+U\+M\+\_\+19
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_a3be7ef61d339af381862a81d4b363efb}\label{my__mpu__wrapper_8h_a3be7ef61d339af381862a81d4b363efb}} 
+\#define {\bfseries C\+L\+O\+CK}~100000
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_a8ce564da10c8817bde73995e60e99465}\label{my__mpu__wrapper_8h_a8ce564da10c8817bde73995e60e99465}} 
+\#define {\bfseries C\+O\+N\+F\+I\+G\+\_\+\+M\+Y\+\_\+\+M\+P\+U\+\_\+\+K\+N\+O\+C\+K\+\_\+\+L\+I\+M\+IT}~2000
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_acc5b83b0150f6ab51324aa07c2819dec}\label{my__mpu__wrapper_8h_acc5b83b0150f6ab51324aa07c2819dec}} 
+void \mbox{\hyperlink{my__mpu__wrapper_8h_acc5b83b0150f6ab51324aa07c2819dec}{knock\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em initialization function for M\+PU. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_af516736e9629d5afa0e9ab4c947342d0}\label{my__mpu__wrapper_8h_af516736e9629d5afa0e9ab4c947342d0}} 
+int \mbox{\hyperlink{my__mpu__wrapper_8h_af516736e9629d5afa0e9ab4c947342d0}{check\+\_\+dunk}} ()
+\begin{DoxyCompactList}\small\item\em checks if the difference of two consequtive measurements (in z-\/direction) passes the threshold set in {\ttfamily C\+O\+N\+F\+I\+G\+\_\+\+M\+Y\+\_\+\+M\+P\+U\+\_\+\+K\+N\+O\+C\+K\+\_\+\+L\+I\+M\+IT} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{my__mpu__wrapper_8h_adfe5d69f6c5ea444c26f90a80c6961e3}\label{my__mpu__wrapper_8h_adfe5d69f6c5ea444c26f90a80c6961e3}} 
+int \mbox{\hyperlink{my__mpu__wrapper_8h_adfe5d69f6c5ea444c26f90a80c6961e3}{get\+\_\+dunk\+\_\+z}} ()
+\begin{DoxyCompactList}\small\item\em returns raw data of z-\/acceleration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+a wrapper library for the mpu, necessary since the M\+P\+U-\/driver is written in c++ here we also implement helper functions for detecting hits. documentation for the M\+P\+U-\/driver can be found here\+: \href{https://esp32-mpu-driver.readthedocs.io/en/latest/}{\texttt{ https\+://esp32-\/mpu-\/driver.\+readthedocs.\+io/en/latest/}} (the M\+P\+U-\/driver is a component in the project, but excluded from documentation as it has its own documentation) 
+

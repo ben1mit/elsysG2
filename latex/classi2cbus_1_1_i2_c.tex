@@ -1,0 +1,232 @@
+\hypertarget{classi2cbus_1_1_i2_c}{}\doxysection{i2cbus\+::I2C Class Reference}
+\label{classi2cbus_1_1_i2_c}\index{i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_aa514486ae0a54fa53a1bfaf77b939ccf}\label{classi2cbus_1_1_i2_c_aa514486ae0a54fa53a1bfaf77b939ccf}} 
+{\bfseries I2C} (i2c\+\_\+port\+\_\+t port)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{classi2cbus_1_1_i2_c_a371a8e03dc4eb5db6b618da998432ce0}{begin}} (gpio\+\_\+num\+\_\+t sda\+\_\+io\+\_\+num, gpio\+\_\+num\+\_\+t scl\+\_\+io\+\_\+num, uint32\+\_\+t clk\+\_\+speed=k\+Default\+Clock\+Speed)
+\begin{DoxyCompactList}\small\item\em Config \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} bus and Install Driver. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a9ca3079f94f82033f902f7177010c7a2}\label{classi2cbus_1_1_i2_c_a9ca3079f94f82033f902f7177010c7a2}} 
+esp\+\_\+err\+\_\+t {\bfseries begin} (gpio\+\_\+num\+\_\+t sda\+\_\+io\+\_\+num, gpio\+\_\+num\+\_\+t scl\+\_\+io\+\_\+num, gpio\+\_\+pullup\+\_\+t sda\+\_\+pullup\+\_\+en, gpio\+\_\+pullup\+\_\+t scl\+\_\+pullup\+\_\+en, uint32\+\_\+t clk\+\_\+speed=k\+Default\+Clock\+Speed)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{classi2cbus_1_1_i2_c_a480e656d557e08b25db03d02d197c7c9}{close}} ()
+\item 
+void \mbox{\hyperlink{classi2cbus_1_1_i2_c_aa33df7b828b63b5cb2810eb14cf159b9}{set\+Timeout}} (uint32\+\_\+t ms)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{classi2cbus_1_1_i2_c_a6f73bf1cb155dff93bf45bae8b4358e1}{write\+Bit}} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Num, uint8\+\_\+t data, int32\+\_\+t timeout=-\/1)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} commands for writing to a 8-\/bit slave device register. All of them returns standard esp\+\_\+err\+\_\+t codes. So it can be used with E\+S\+P\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+H\+E\+C\+K();. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_abeade81d131f2edbc0f87cd65ccbfe0d}\label{classi2cbus_1_1_i2_c_abeade81d131f2edbc0f87cd65ccbfe0d}} 
+esp\+\_\+err\+\_\+t {\bfseries write\+Bits} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t length, uint8\+\_\+t data, int32\+\_\+t timeout=-\/1)
+\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a097586a3ad5324d8db902d6f768d8611}\label{classi2cbus_1_1_i2_c_a097586a3ad5324d8db902d6f768d8611}} 
+esp\+\_\+err\+\_\+t {\bfseries write\+Byte} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, uint8\+\_\+t data, int32\+\_\+t timeout=-\/1)
+\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a7b1e7349cc3074913a8956d361fbf264}\label{classi2cbus_1_1_i2_c_a7b1e7349cc3074913a8956d361fbf264}} 
+esp\+\_\+err\+\_\+t {\bfseries write\+Bytes} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, size\+\_\+t length, const uint8\+\_\+t $\ast$data, int32\+\_\+t timeout=-\/1)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{classi2cbus_1_1_i2_c_a8468a74a1a79fc4a5315151250df48d6}{read\+Bit}} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Num, uint8\+\_\+t $\ast$data, int32\+\_\+t timeout=-\/1)
+\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_aa3e55915f18b8ad32e7b89ac364eb3a3}\label{classi2cbus_1_1_i2_c_aa3e55915f18b8ad32e7b89ac364eb3a3}} 
+esp\+\_\+err\+\_\+t {\bfseries read\+Bits} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, uint8\+\_\+t bit\+Start, uint8\+\_\+t length, uint8\+\_\+t $\ast$data, int32\+\_\+t timeout=-\/1)
+\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_ad8c1caaacf302900fa1291b69856daa9}\label{classi2cbus_1_1_i2_c_ad8c1caaacf302900fa1291b69856daa9}} 
+esp\+\_\+err\+\_\+t {\bfseries read\+Byte} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, uint8\+\_\+t $\ast$data, int32\+\_\+t timeout=-\/1)
+\item 
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_ad218ae277f7f578a90226e2644bae71d}\label{classi2cbus_1_1_i2_c_ad218ae277f7f578a90226e2644bae71d}} 
+esp\+\_\+err\+\_\+t {\bfseries read\+Bytes} (uint8\+\_\+t dev\+Addr, uint8\+\_\+t reg\+Addr, size\+\_\+t length, uint8\+\_\+t $\ast$data, int32\+\_\+t timeout=-\/1)
+\item 
+esp\+\_\+err\+\_\+t \mbox{\hyperlink{classi2cbus_1_1_i2_c_a7fdda3885ae9d66bb4b807daa075c871}{test\+Connection}} (uint8\+\_\+t dev\+Addr, int32\+\_\+t timeout=-\/1)
+\begin{DoxyCompactList}\small\item\em Quick check to see if a slave device responds. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classi2cbus_1_1_i2_c_ac68d13afb8e4f3a8851eaad1f21c7de2}{scanner}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 57 of file I2\+Cbus.\+hpp.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a371a8e03dc4eb5db6b618da998432ce0}\label{classi2cbus_1_1_i2_c_a371a8e03dc4eb5db6b618da998432ce0}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!begin@{begin}}
+\index{begin@{begin}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t i2cbus\+::\+I2\+C\+::begin (\begin{DoxyParamCaption}\item[{gpio\+\_\+num\+\_\+t}]{sda\+\_\+io\+\_\+num,  }\item[{gpio\+\_\+num\+\_\+t}]{scl\+\_\+io\+\_\+num,  }\item[{uint32\+\_\+t}]{clk\+\_\+speed = {\ttfamily kDefaultClockSpeed} }\end{DoxyParamCaption})}
+
+
+
+Config \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} bus and Install Driver. 
+
+$\ast$$\ast$$\ast$ \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} Begin $\ast$$\ast$$\ast$ 
+\begin{DoxyParams}{Parameters}
+{\em sda\+\_\+io\+\_\+num} & \mbox{[}G\+P\+IO number for S\+DA line\mbox{]} \\
+\hline
+{\em scl\+\_\+io\+\_\+num} & \mbox{[}G\+P\+IO number for S\+CL line\mbox{]} \\
+\hline
+{\em sda\+\_\+pullup\+\_\+en} & \mbox{[}Enable internal pullup on S\+DA line\mbox{]} \\
+\hline
+{\em scl\+\_\+pullup\+\_\+en} & \mbox{[}Enable internal pullup on S\+CL line\mbox{]} \\
+\hline
+{\em clk\+\_\+speed} & \mbox{[}\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} clock frequency for master mode, (no higher than 1M\+Hz for now), Default 100K\+Hz\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\char`\"{}driver/i2c.\+h\char`\"{} 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+-\/ E\+S\+P\+\_\+\+OK Success
+\begin{DoxyItemize}
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+A\+RG Parameter error
+\item E\+S\+P\+\_\+\+F\+A\+IL Driver install error 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+Definition at line 77 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a480e656d557e08b25db03d02d197c7c9}\label{classi2cbus_1_1_i2_c_a480e656d557e08b25db03d02d197c7c9}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!close@{close}}
+\index{close@{close}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t i2cbus\+::\+I2\+C\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Stop \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} bus and unninstall driver 
+
+Definition at line 95 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a8468a74a1a79fc4a5315151250df48d6}\label{classi2cbus_1_1_i2_c_a8468a74a1a79fc4a5315151250df48d6}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!readBit@{readBit}}
+\index{readBit@{readBit}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{readBit()}{readBit()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t i2cbus\+::\+I2\+C\+::read\+Bit (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{dev\+Addr,  }\item[{uint8\+\_\+t}]{reg\+Addr,  }\item[{uint8\+\_\+t}]{bit\+Num,  }\item[{uint8\+\_\+t $\ast$}]{data,  }\item[{int32\+\_\+t}]{timeout = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+$\ast$$\ast$$\ast$ R\+E\+A\+D\+I\+NG interface $\ast$$\ast$$\ast$ @breif \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} commands for reading a 8-\/bit slave device register. All of them returns standard esp\+\_\+err\+\_\+t codes.\+So it can be used with E\+S\+P\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+H\+E\+C\+K(); 
+\begin{DoxyParams}{Parameters}
+{\em dev\+Addr} & \mbox{[}\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} slave device register\mbox{]} \\
+\hline
+{\em reg\+Addr} & \mbox{[}Register address to read from\mbox{]} \\
+\hline
+{\em bit\+Num} & \mbox{[}Bit position number to write to (bit 7$\sim$0)\mbox{]} \\
+\hline
+{\em bit\+Start} & \mbox{[}Start bit number when writing a bit-\/sequence (M\+SB)\mbox{]} \\
+\hline
+{\em data} & \mbox{[}Buffer to store the read value(s)\mbox{]} \\
+\hline
+{\em length} & \mbox{[}Number of bytes to read (should be within the data buffer size)\mbox{]} \\
+\hline
+{\em timeout} & \mbox{[}Custom timeout for the particular call\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ E\+S\+P\+\_\+\+OK Success
+\begin{DoxyItemize}
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+A\+RG Parameter error
+\item E\+S\+P\+\_\+\+F\+A\+IL Sending command error, slave doesn\textquotesingle{}t A\+CK the transfer.
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+S\+T\+A\+TE \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} driver not installed or not in master mode.
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+O\+UT Operation timeout because the bus is busy.\mbox{]} 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+Definition at line 167 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_ac68d13afb8e4f3a8851eaad1f21c7de2}\label{classi2cbus_1_1_i2_c_ac68d13afb8e4f3a8851eaad1f21c7de2}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!scanner@{scanner}}
+\index{scanner@{scanner}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{scanner()}{scanner()}}
+{\footnotesize\ttfamily void i2cbus\+::\+I2\+C\+::scanner (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} scanner utility, prints out all device addresses found on this \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} bus. 
+
+Definition at line 233 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_aa33df7b828b63b5cb2810eb14cf159b9}\label{classi2cbus_1_1_i2_c_aa33df7b828b63b5cb2810eb14cf159b9}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!setTimeout@{setTimeout}}
+\index{setTimeout@{setTimeout}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{setTimeout()}{setTimeout()}}
+{\footnotesize\ttfamily void i2cbus\+::\+I2\+C\+::set\+Timeout (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{ms }\end{DoxyParamCaption})}
+
+Timeout read and write in milliseconds 
+
+Definition at line 99 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a7fdda3885ae9d66bb4b807daa075c871}\label{classi2cbus_1_1_i2_c_a7fdda3885ae9d66bb4b807daa075c871}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!testConnection@{testConnection}}
+\index{testConnection@{testConnection}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{testConnection()}{testConnection()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t i2cbus\+::\+I2\+C\+::test\+Connection (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{dev\+Addr,  }\item[{int32\+\_\+t}]{timeout = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+Quick check to see if a slave device responds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dev\+Addr} & \mbox{[}\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} slave device register\mbox{]} \\
+\hline
+{\em timeout} & \mbox{[}Custom timeout for the particular call\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ E\+S\+P\+\_\+\+OK Success
+\begin{DoxyItemize}
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+A\+RG Parameter error
+\item E\+S\+P\+\_\+\+F\+A\+IL Sending command error, slave doesn\textquotesingle{}t A\+CK the transfer.
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+S\+T\+A\+TE \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} driver not installed or not in master mode.
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+O\+UT Operation timeout because the bus is busy.\mbox{]} 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+Definition at line 223 of file I2\+Cbus.\+cpp.
+
+\mbox{\Hypertarget{classi2cbus_1_1_i2_c_a6f73bf1cb155dff93bf45bae8b4358e1}\label{classi2cbus_1_1_i2_c_a6f73bf1cb155dff93bf45bae8b4358e1}} 
+\index{i2cbus::I2C@{i2cbus::I2C}!writeBit@{writeBit}}
+\index{writeBit@{writeBit}!i2cbus::I2C@{i2cbus::I2C}}
+\doxysubsubsection{\texorpdfstring{writeBit()}{writeBit()}}
+{\footnotesize\ttfamily esp\+\_\+err\+\_\+t i2cbus\+::\+I2\+C\+::write\+Bit (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{dev\+Addr,  }\item[{uint8\+\_\+t}]{reg\+Addr,  }\item[{uint8\+\_\+t}]{bit\+Num,  }\item[{uint8\+\_\+t}]{data,  }\item[{int32\+\_\+t}]{timeout = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} commands for writing to a 8-\/bit slave device register. All of them returns standard esp\+\_\+err\+\_\+t codes. So it can be used with E\+S\+P\+\_\+\+E\+R\+R\+O\+R\+\_\+\+C\+H\+E\+C\+K();. 
+
+$\ast$$\ast$$\ast$ W\+R\+I\+T\+I\+NG interface $\ast$$\ast$$\ast$ 
+\begin{DoxyParams}{Parameters}
+{\em dev\+Addr} & \mbox{[}\mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} slave device register\mbox{]} \\
+\hline
+{\em reg\+Addr} & \mbox{[}Register address to write to\mbox{]} \\
+\hline
+{\em bit\+Num} & \mbox{[}Bit position number to write to (bit 7$\sim$0)\mbox{]} \\
+\hline
+{\em bit\+Start} & \mbox{[}Start bit number when writing a bit-\/sequence (M\+SB)\mbox{]} \\
+\hline
+{\em data} & \mbox{[}Value(s) to be write to the register\mbox{]} \\
+\hline
+{\em length} & \mbox{[}Number of bytes to write (should be within the data buffer size)\mbox{]} \mbox{[}write\+Bits() -\/$>$ Number of bits after bit\+Start (including)\mbox{]} \\
+\hline
+{\em timeout} & \mbox{[}Custom timeout for the particular call\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ E\+S\+P\+\_\+\+OK Success
+\begin{DoxyItemize}
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+A\+RG Parameter error
+\item E\+S\+P\+\_\+\+F\+A\+IL Sending command error, slave doesn\textquotesingle{}t A\+CK the transfer.
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+I\+N\+V\+A\+L\+I\+D\+\_\+\+S\+T\+A\+TE \mbox{\hyperlink{classi2cbus_1_1_i2_c}{I2C}} driver not installed or not in master mode.
+\item E\+S\+P\+\_\+\+E\+R\+R\+\_\+\+T\+I\+M\+E\+O\+UT Operation timeout because the bus is busy. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+Definition at line 108 of file I2\+Cbus.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+main\+\_\+project/components/\+I2\+Cbus/include/\mbox{\hyperlink{_i2_cbus_8hpp}{I2\+Cbus.\+hpp}}\item 
+main\+\_\+project/components/\+I2\+Cbus/src/\mbox{\hyperlink{_i2_cbus_8cpp}{I2\+Cbus.\+cpp}}\end{DoxyCompactItemize}

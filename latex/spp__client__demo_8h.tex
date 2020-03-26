@@ -1,0 +1,27 @@
+\hypertarget{spp__client__demo_8h}{}\doxysection{main\+\_\+project/components/ble\+\_\+spp\+\_\+client/include/spp\+\_\+client\+\_\+demo.h File Reference}
+\label{spp__client__demo_8h}\index{main\_project/components/ble\_spp\_client/include/spp\_client\_demo.h@{main\_project/components/ble\_spp\_client/include/spp\_client\_demo.h}}
+
+
+library for sending data over bluetooth low energy  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{spp__client__demo_8h_af82cee655f925ff01ed1458b0923e67a}\label{spp__client__demo_8h_af82cee655f925ff01ed1458b0923e67a}} 
+void \mbox{\hyperlink{spp__client__demo_8h_af82cee655f925ff01ed1458b0923e67a}{ble\+\_\+client\+\_\+app\+\_\+main}} ()
+\begin{DoxyCompactList}\small\item\em initialization function for B\+LE sending. Must be called before anything else in this library works. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{spp__client__demo_8h_ac5e90af3f5d31a6b8a3de3c8018a38c3}\label{spp__client__demo_8h_ac5e90af3f5d31a6b8a3de3c8018a38c3}} 
+void \mbox{\hyperlink{spp__client__demo_8h_ac5e90af3f5d31a6b8a3de3c8018a38c3}{my\+\_\+client\+\_\+send\+\_\+multiple\+\_\+digits}} (int num\+\_\+to\+\_\+send)
+\begin{DoxyCompactList}\small\item\em a function for sending a number with multiple digits over B\+LE in special format. it sends one digit at a time, and at the end of the number sends a comma. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{spp__client__demo_8h_a4d3d3294bb009d4e75e7342dc2327bfd}\label{spp__client__demo_8h_a4d3d3294bb009d4e75e7342dc2327bfd}} 
+void \mbox{\hyperlink{spp__client__demo_8h_a4d3d3294bb009d4e75e7342dc2327bfd}{my\+\_\+client\+\_\+send\+\_\+single\+\_\+digit}} (int num\+\_\+to\+\_\+send)
+\begin{DoxyCompactList}\small\item\em a function that sends a single digit over B\+LE. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+library for sending data over bluetooth low energy 
+
+\begin{DoxyNote}{Note}
+this might be very suboptimal for fast connection. this file is largely based on the example found at esp-\/idf/examples/bluetooth/bluedroid/ble/ble\+\_\+spp\+\_\+client 
+\end{DoxyNote}

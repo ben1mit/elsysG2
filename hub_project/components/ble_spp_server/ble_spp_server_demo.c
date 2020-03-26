@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief implementation file for ble_spp_server_demo
+
 /*
    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -483,6 +487,7 @@ static void gap_event_handler(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param
     }
 }
 
+//this is the functions that runs continuously and calls my_http sender when it recieves data. 
 static void gatts_profile_event_handler(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param)
 {
     esp_ble_gatts_cb_param_t *p_data = (esp_ble_gatts_cb_param_t *) param;

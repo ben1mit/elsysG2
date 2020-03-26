@@ -1,3 +1,6 @@
+/**
+ * @file 
+ * @brief implementation file for my_http_sender
 /* 
 AN EXAMPLE FILE FOR SENDING DATA TO "https://www.vibecheck.no/esptest.php",
 data is sent in json format with hhtp-post and formatted into a table at the webpage. 

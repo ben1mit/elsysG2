@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['my_5fclient_5fsend_5fmultiple_5fdigits_69',['my_client_send_multiple_digits',['../spp__client__demo_8h.html#ac5e90af3f5d31a6b8a3de3c8018a38c3',1,'my_client_send_multiple_digits(int num_to_send):&#160;spp_client_demo.c'],['../spp__client__demo_8c.html#ac5e90af3f5d31a6b8a3de3c8018a38c3',1,'my_client_send_multiple_digits(int num_to_send):&#160;spp_client_demo.c']]],
+  ['my_5fclient_5fsend_5fsingle_5fdigit_70',['my_client_send_single_digit',['../spp__client__demo_8h.html#a4d3d3294bb009d4e75e7342dc2327bfd',1,'my_client_send_single_digit(int num_to_send):&#160;spp_client_demo.c'],['../spp__client__demo_8c.html#a4d3d3294bb009d4e75e7342dc2327bfd',1,'my_client_send_single_digit(int num_to_send):&#160;spp_client_demo.c']]],
+  ['my_5fhttp_5fsender_5finit_71',['my_http_sender_init',['../my__http__sender_8h.html#a0a663676a8d0e9bc7e5370bfe46e4c1c',1,'my_http_sender_init():&#160;my_http_sender.c'],['../my__http__sender_8c.html#a0a663676a8d0e9bc7e5370bfe46e4c1c',1,'my_http_sender_init():&#160;my_http_sender.c']]],
+  ['my_5fhttp_5fsender_5fsend_5fturbine_72',['my_http_sender_send_turbine',['../my__http__sender_8h.html#abe310355f3ccd6ab5bb6b7b33ac9a079',1,'my_http_sender_send_turbine(int turbin_id, int data[], size_t data_len):&#160;my_http_sender.c'],['../my__http__sender_8c.html#abe310355f3ccd6ab5bb6b7b33ac9a079',1,'my_http_sender_send_turbine(int turbin_id, int data[], size_t data_len):&#160;my_http_sender.c']]]
+];

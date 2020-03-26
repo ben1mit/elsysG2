@@ -1,0 +1,85 @@
+\hypertarget{ble__spp__server__demo_8h}{}\doxysection{hub\+\_\+project/components/ble\+\_\+spp\+\_\+server/include/ble\+\_\+spp\+\_\+server\+\_\+demo.h File Reference}
+\label{ble__spp__server__demo_8h}\index{hub\_project/components/ble\_spp\_server/include/ble\_spp\_server\_demo.h@{hub\_project/components/ble\_spp\_server/include/ble\_spp\_server\_demo.h}}
+
+
+ble\+\_\+spp\+\_\+server\+\_\+demo, a library for recieving data to be relayed on the hub largely based on the example from espressif found at esp-\/idf/examples/bluetooth/bluedroid/ble/ble\+\_\+spp\+\_\+server  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_ad124f904bf8f07f85da2969d50628559}\label{ble__spp__server__demo_8h_ad124f904bf8f07f85da2969d50628559}} 
+\#define {\bfseries spp\+\_\+sprintf}(s, ...)~sprintf((char$\ast$)(s), \#\#\+\_\+\+\_\+\+V\+A\+\_\+\+A\+R\+G\+S\+\_\+\+\_\+)
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_a10581b03212a8f728d1abfb336b9c0df}\label{ble__spp__server__demo_8h_a10581b03212a8f728d1abfb336b9c0df}} 
+\#define {\bfseries S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+M\+A\+X\+\_\+\+L\+EN}~(512)
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_a30ec5106d7503b5eac07abe8ea1fbbef}\label{ble__spp__server__demo_8h_a30ec5106d7503b5eac07abe8ea1fbbef}} 
+\#define {\bfseries S\+P\+P\+\_\+\+C\+M\+D\+\_\+\+M\+A\+X\+\_\+\+L\+EN}~(20)
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_ae9d9996488d555d0ccb229ed202cf6ef}\label{ble__spp__server__demo_8h_ae9d9996488d555d0ccb229ed202cf6ef}} 
+\#define {\bfseries S\+P\+P\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+M\+A\+X\+\_\+\+L\+EN}~(20)
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_a95ef64ea99f8a665d8005d6f1d1b6549}\label{ble__spp__server__demo_8h_a95ef64ea99f8a665d8005d6f1d1b6549}} 
+\#define {\bfseries S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+B\+U\+F\+F\+\_\+\+M\+A\+X\+\_\+\+L\+EN}~(2$\ast$1024)
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_ac45aaf12e4436aa20db842c52a10dfa4}\label{ble__spp__server__demo_8h_ac45aaf12e4436aa20db842c52a10dfa4}} 
+\#define {\bfseries S\+E\+N\+D\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\+LY}~true
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8h_a06fc87d81c62e9abb8790b6e5713c55b}\label{ble__spp__server__demo_8h_a06fc87d81c62e9abb8790b6e5713c55b}} 
+enum \{ \newline
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+VC}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+C\+V\+\_\+\+C\+H\+AR}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+C\+V\+\_\+\+V\+AL}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+I\+F\+Y\+\_\+\+C\+H\+AR}, 
+\newline
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+N\+T\+Y\+\_\+\+V\+AL}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+N\+T\+F\+\_\+\+C\+FG}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+C\+H\+AR}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+V\+AL}, 
+\newline
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+C\+H\+AR}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+V\+AL}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+S\+P\+P\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+C\+FG}, 
+{\bfseries S\+P\+P\+\_\+\+I\+D\+X\+\_\+\+NB}
+ \}
+\begin{DoxyCompactList}\small\item\em Attributes State Machine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ble__spp__server__demo_8h_a4433ce5b860ac517a64bd30618f04b2e}{ble\+\_\+main}} (void)
+\begin{DoxyCompactList}\small\item\em this is the function that handles all bluetooth-\/related activities on the hub \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ble\+\_\+spp\+\_\+server\+\_\+demo, a library for recieving data to be relayed on the hub largely based on the example from espressif found at esp-\/idf/examples/bluetooth/bluedroid/ble/ble\+\_\+spp\+\_\+server 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ble__spp__server__demo_8h_a4433ce5b860ac517a64bd30618f04b2e}\label{ble__spp__server__demo_8h_a4433ce5b860ac517a64bd30618f04b2e}} 
+\index{ble\_spp\_server\_demo.h@{ble\_spp\_server\_demo.h}!ble\_main@{ble\_main}}
+\index{ble\_main@{ble\_main}!ble\_spp\_server\_demo.h@{ble\_spp\_server\_demo.h}}
+\doxysubsubsection{\texorpdfstring{ble\_main()}{ble\_main()}}
+{\footnotesize\ttfamily void ble\+\_\+main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+this is the function that handles all bluetooth-\/related activities on the hub 
+
+\begin{DoxyNote}{Note}
+when it recieves data it calls {\ttfamily my\+\_\+http\+\_\+sender\+\_\+send\+\_\+turbine} if {\ttfamily S\+E\+N\+D\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\+LY} is true and {\ttfamily fill\+\_\+my\+\_\+http\+\_\+buffer\+\_\+digit} with the single digit recieved over B\+LE as a parameter if {\ttfamily S\+E\+N\+D\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\+LY} is false. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+does not initialize nvs, since that is done in {\ttfamily my\+\_\+http\+\_\+sender\+\_\+init} , and thus it is important to call that function first. 
+\end{DoxyWarning}
+
+
+Definition at line 678 of file ble\+\_\+spp\+\_\+server\+\_\+demo.\+c.
+

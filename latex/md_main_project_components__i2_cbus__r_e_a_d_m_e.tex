@@ -1,0 +1,78 @@
+I2C interface library in C++ for working with {\bfseries{Espressif E\+S\+P32 IoT Development Framework \+\_\+(esp-\/idf)\+\_\+}}, that supports master mode.
+
+The intention of this library is to read and write to I2C slave devices (most sensors) with ease, by providing quick and specific functions aimed for 8-\/bit data. It is based on I2\+Cdev by Jeff Rowberg.\hypertarget{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md14}{}\doxysection{Install}\label{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md14}
+You can clone it right into your project components directory or in your specific library path.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone https://github.com/natanaeljr/esp32-\/I2Cbus.git I2Cbus}
+\end{DoxyCode}
+\hypertarget{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md15}{}\doxysection{Usage}\label{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md15}
+The E\+S\+P32 has two I2C controllers which can control two separated buses, so the library provides two ready-\/to-\/use objects\+:
+
+{\ttfamily i2c0} which corresponds to the I2C controller port 0, and
+
+{\ttfamily i2c1} which corresponds to the I2C controller port 1.
+
+However you can create your own object as you wish.\hypertarget{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md16}{}\doxysubsection{Example}\label{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md16}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{// default objects}
+\DoxyCodeLine{i2c0.begin(GPIO\_NUM\_16, GPIO\_NUM\_17);  // sda, scl, default clock 100 Khz}
+\DoxyCodeLine{i2c1.begin(GPIO\_NUM\_21, GPIO\_NUM\_22, 400000);  // sda, scl, 400 Khz}
+\DoxyCodeLine{// OR create an object which manages controller num 0}
+\DoxyCodeLine{I2C\_t myI2C(I2C\_NUM\_0);}
+\DoxyCodeLine{// configure and initialize}
+\DoxyCodeLine{myI2C.begin(GPIO\_NUM\_21, GPIO\_NUM\_22);}
+\DoxyCodeLine{myI2C.setTimeout(10);  // default was 1000ms}
+\DoxyCodeLine{// start using}
+\DoxyCodeLine{myI2C.scanner();}
+\DoxyCodeLine{myI2C.writeByte(DEVICE\_ADDR, REG\_ADDR, DATA);}
+\DoxyCodeLine{myI2C.readBytes(DEVICE\_ADDR, REG\_ADDR, LENGTH, BUFFER);}
+\DoxyCodeLine{myI2C.close();}
+\end{DoxyCode}
+\hypertarget{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md17}{}\doxysubsection{List of methods}\label{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md17}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{C++\}}
+\DoxyCodeLine{// SETUP}
+\DoxyCodeLine{esp\_err\_t begin(gpio\_num\_t sda\_io\_num, gpio\_num\_t scl\_io\_num, uint32\_t clk\_speed = I2CBUS\_CLOCKSPEED\_DEFAULT);}
+\DoxyCodeLine{esp\_err\_t begin(gpio\_num\_t sda\_io\_num, gpio\_num\_t scl\_io\_num, gpio\_pullup\_t sda\_pullup\_en, gpio\_pullup\_t scl\_pullup\_en, uint32\_t clk\_speed = I2CBUS\_CLOCKSPEED\_DEFAULT);}
+\DoxyCodeLine{esp\_err\_t close();}
+\DoxyCodeLine{void setTimeout(uint32\_t ms);}
+\DoxyCodeLine{}
+\DoxyCodeLine{// WRITING}
+\DoxyCodeLine{esp\_err\_t writeBit(uint8\_t devAddr, uint8\_t regAddr, uint8\_t bitNum, uint8\_t data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{esp\_err\_t writeBits(uint8\_t devAddr, uint8\_t regAddr, uint8\_t bitStart, uint8\_t length, uint8\_t data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{esp\_err\_t writeByte(uint8\_t devAddr, uint8\_t regAddr, uint8\_t data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{esp\_err\_t writeBytes(uint8\_t devAddr, uint8\_t regAddr, size\_t length, const uint8\_t *data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{}
+\DoxyCodeLine{// READING}
+\DoxyCodeLine{esp\_err\_t readBit(uint8\_t devAddr, uint8\_t regAddr, uint8\_t bitNum, uint8\_t *data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{esp\_err\_t readBits(uint8\_t devAddr, uint8\_t regAddr, uint8\_t bitStart, uint8\_t length, uint8\_t *data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{esp\_err\_t readByte(uint8\_t devAddr, uint8\_t regAddr, uint8\_t *data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{esp\_err\_t readBytes(uint8\_t devAddr, uint8\_t regAddr, size\_t length, uint8\_t *data, int32\_t timeout = -\/1);}
+\DoxyCodeLine{}
+\DoxyCodeLine{// TOOLS}
+\DoxyCodeLine{esp\_err\_t testConnection(uint8\_t devAddr, int32\_t timeout = -\/1);}
+\DoxyCodeLine{void scanner();}
+\end{DoxyCode}
+
+
+Each method have an optional custom timeout for that specific call, if this value is not passed (default {\ttfamily -\/1}) or is {\ttfamily $<$ 0}, it will use the default timeout. You can change the default timeout by calling {\ttfamily set\+Timeout(ms)}.
+
+\begin{DoxySeeAlso}{See also}
+header file for more notes and descriptions.
+\end{DoxySeeAlso}
+\hypertarget{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md18}{}\doxysection{Menuconfig}\label{md_main_project_components__i2_cbus__r_e_a_d_m_e_autotoc_md18}
+You can change some settings (for debugging) in menuconfig under components and I2\+Cbus.
+
+
+
+\DoxyHorRuler{0}
+
+
+See also\+: S\+P\+Ibus library \href{https://github.com/natanaeljr/esp32-SPIbus}{\texttt{ https\+://github.\+com/natanaeljr/esp32-\/\+S\+P\+Ibus}}
+
+Copyright © 2017 Natanael Josue Rabello \mbox{[}\href{mailto:_natanael.rabello@outlook.com_}{\texttt{ \+\_\+natanael.\+rabello@outlook.\+com\+\_\+}}\mbox{]} 

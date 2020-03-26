@@ -1,0 +1,123 @@
+\hypertarget{ble__spp__server__demo_8c}{}\doxysection{hub\+\_\+project/components/ble\+\_\+spp\+\_\+server/ble\+\_\+spp\+\_\+server\+\_\+demo.c File Reference}
+\label{ble__spp__server__demo_8c}\index{hub\_project/components/ble\_spp\_server/ble\_spp\_server\_demo.c@{hub\_project/components/ble\_spp\_server/ble\_spp\_server\_demo.c}}
+
+
+implementation file for ble\+\_\+spp\+\_\+server\+\_\+demo  
+
+
+{\ttfamily \#include \char`\"{}freertos/\+Free\+R\+T\+O\+S.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}freertos/task.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}freertos/event\+\_\+groups.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+system.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}nvs\+\_\+flash.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+bt.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}driver/uart.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}string.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+gap\+\_\+ble\+\_\+api.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+gatts\+\_\+api.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+bt\+\_\+defs.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}esp\+\_\+bt\+\_\+main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ble\+\_\+spp\+\_\+server\+\_\+demo.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}my\+\_\+http\+\_\+sender.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structgatts__profile__inst}{gatts\+\_\+profile\+\_\+inst}}
+\item 
+struct \mbox{\hyperlink{structspp__receive__data__node}{spp\+\_\+receive\+\_\+data\+\_\+node}}
+\item 
+struct \mbox{\hyperlink{structspp__receive__data__buff}{spp\+\_\+receive\+\_\+data\+\_\+buff}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a23217e54123406489e602dc0da505f91}\label{ble__spp__server__demo_8c_a23217e54123406489e602dc0da505f91}} 
+\#define {\bfseries G\+A\+T\+T\+S\+\_\+\+T\+A\+B\+L\+E\+\_\+\+T\+AG}~\char`\"{}G\+A\+T\+T\+S\+\_\+\+S\+P\+P\+\_\+\+D\+E\+MO\char`\"{}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_adf1330d5851edcffbf764521c031ecab}\label{ble__spp__server__demo_8c_adf1330d5851edcffbf764521c031ecab}} 
+\#define {\bfseries S\+P\+P\+\_\+\+P\+R\+O\+F\+I\+L\+E\+\_\+\+N\+UM}~1
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a586acfe75065c5989d1b3728f7096aa6}\label{ble__spp__server__demo_8c_a586acfe75065c5989d1b3728f7096aa6}} 
+\#define {\bfseries S\+P\+P\+\_\+\+P\+R\+O\+F\+I\+L\+E\+\_\+\+A\+P\+P\+\_\+\+I\+DX}~0
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a538f72549db4fcdae32d19eb41d8aeb6}\label{ble__spp__server__demo_8c_a538f72549db4fcdae32d19eb41d8aeb6}} 
+\#define {\bfseries E\+S\+P\+\_\+\+S\+P\+P\+\_\+\+A\+P\+P\+\_\+\+ID}~0x56
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a6c9ac144ab5d14ab60ca39e1c8f3af4f}\label{ble__spp__server__demo_8c_a6c9ac144ab5d14ab60ca39e1c8f3af4f}} 
+\#define {\bfseries S\+A\+M\+P\+L\+E\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+N\+A\+ME}~\char`\"{}E\+S\+P\+\_\+\+S\+P\+P\+\_\+\+S\+E\+R\+V\+ER\char`\"{}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a12513bc359ab601241128c2b3be4ce95}\label{ble__spp__server__demo_8c_a12513bc359ab601241128c2b3be4ce95}} 
+\#define {\bfseries S\+P\+P\+\_\+\+S\+V\+C\+\_\+\+I\+N\+S\+T\+\_\+\+ID}~0
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a344e81d261a8f3949cd469ecee393102}\label{ble__spp__server__demo_8c_a344e81d261a8f3949cd469ecee393102}} 
+\#define \mbox{\hyperlink{ble__spp__server__demo_8c_a344e81d261a8f3949cd469ecee393102}{E\+S\+P\+\_\+\+G\+A\+T\+T\+\_\+\+U\+U\+I\+D\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+C\+E\+I\+VE}}~0x\+A\+B\+F1
+\begin{DoxyCompactList}\small\item\em Characteristic U\+U\+ID. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_acb5b6c91bdf39300d57c81cce5508133}\label{ble__spp__server__demo_8c_acb5b6c91bdf39300d57c81cce5508133}} 
+\#define {\bfseries E\+S\+P\+\_\+\+G\+A\+T\+T\+\_\+\+U\+U\+I\+D\+\_\+\+S\+P\+P\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+T\+I\+FY}~0x\+A\+B\+F2
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_ad54c0b2b944f2c4722def0b706794d9b}\label{ble__spp__server__demo_8c_ad54c0b2b944f2c4722def0b706794d9b}} 
+\#define {\bfseries E\+S\+P\+\_\+\+G\+A\+T\+T\+\_\+\+U\+U\+I\+D\+\_\+\+S\+P\+P\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+R\+E\+C\+E\+I\+VE}~0x\+A\+B\+F3
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a5f253eee89c3e438bd0a4b22d73bf72c}\label{ble__spp__server__demo_8c_a5f253eee89c3e438bd0a4b22d73bf72c}} 
+\#define {\bfseries E\+S\+P\+\_\+\+G\+A\+T\+T\+\_\+\+U\+U\+I\+D\+\_\+\+S\+P\+P\+\_\+\+C\+O\+M\+M\+A\+N\+D\+\_\+\+N\+O\+T\+I\+FY}~0x\+A\+B\+F4
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a36dab879c60ad380569b702ffb0caabf}\label{ble__spp__server__demo_8c_a36dab879c60ad380569b702ffb0caabf}} 
+\#define {\bfseries C\+H\+A\+R\+\_\+\+D\+E\+C\+L\+A\+R\+A\+T\+I\+O\+N\+\_\+\+S\+I\+ZE}~(sizeof(uint8\+\_\+t))
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a7369aa4f3d5a35e5fa9f17f538ac88c9}\label{ble__spp__server__demo_8c_a7369aa4f3d5a35e5fa9f17f538ac88c9}} 
+typedef struct \mbox{\hyperlink{structspp__receive__data__node}{spp\+\_\+receive\+\_\+data\+\_\+node}} {\bfseries spp\+\_\+receive\+\_\+data\+\_\+node\+\_\+t}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a575e62abe7294ae5ea6e8d4b01b68cd5}\label{ble__spp__server__demo_8c_a575e62abe7294ae5ea6e8d4b01b68cd5}} 
+typedef struct \mbox{\hyperlink{structspp__receive__data__buff}{spp\+\_\+receive\+\_\+data\+\_\+buff}} {\bfseries spp\+\_\+receive\+\_\+data\+\_\+buff\+\_\+t}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a6e5a006898eed1a600f445a9e48623f1}\label{ble__spp__server__demo_8c_a6e5a006898eed1a600f445a9e48623f1}} 
+void {\bfseries uart\+\_\+task} (void $\ast$pv\+Parameters)
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_ac50f507c847cd6c1379702c538b97dcc}\label{ble__spp__server__demo_8c_ac50f507c847cd6c1379702c538b97dcc}} 
+void {\bfseries spp\+\_\+cmd\+\_\+task} (void $\ast$arg)
+\item 
+void \mbox{\hyperlink{ble__spp__server__demo_8c_a4433ce5b860ac517a64bd30618f04b2e}{ble\+\_\+main}} (void)
+\begin{DoxyCompactList}\small\item\em this is the function that handles all bluetooth-\/related activities on the hub \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a9050d8ee711c35abae667d6414542c6e}\label{ble__spp__server__demo_8c_a9050d8ee711c35abae667d6414542c6e}} 
+Queue\+Handle\+\_\+t {\bfseries spp\+\_\+uart\+\_\+queue} = N\+U\+LL
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+implementation file for ble\+\_\+spp\+\_\+server\+\_\+demo 
+
+/$\ast$ This example code is in the Public Domain (or C\+C0 licensed, at your option.)
+
+Unless required by applicable law or agreed to in writing, this software is distributed on an \char`\"{}\+A\+S I\+S\char`\"{} B\+A\+S\+IS, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+T\+I\+ES OR C\+O\+N\+D\+I\+T\+I\+O\+NS OF A\+NY K\+I\+ND, either express or implied. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{ble__spp__server__demo_8c_a4433ce5b860ac517a64bd30618f04b2e}\label{ble__spp__server__demo_8c_a4433ce5b860ac517a64bd30618f04b2e}} 
+\index{ble\_spp\_server\_demo.c@{ble\_spp\_server\_demo.c}!ble\_main@{ble\_main}}
+\index{ble\_main@{ble\_main}!ble\_spp\_server\_demo.c@{ble\_spp\_server\_demo.c}}
+\doxysubsubsection{\texorpdfstring{ble\_main()}{ble\_main()}}
+{\footnotesize\ttfamily void ble\+\_\+main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+this is the function that handles all bluetooth-\/related activities on the hub 
+
+\begin{DoxyNote}{Note}
+when it recieves data it calls {\ttfamily my\+\_\+http\+\_\+sender\+\_\+send\+\_\+turbine} if {\ttfamily S\+E\+N\+D\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\+LY} is true and {\ttfamily fill\+\_\+my\+\_\+http\+\_\+buffer\+\_\+digit} with the single digit recieved over B\+LE as a parameter if {\ttfamily S\+E\+N\+D\+\_\+\+I\+M\+M\+E\+D\+I\+A\+T\+E\+LY} is false. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+does not initialize nvs, since that is done in {\ttfamily my\+\_\+http\+\_\+sender\+\_\+init} , and thus it is important to call that function first. 
+\end{DoxyWarning}
+
+
+Definition at line 678 of file ble\+\_\+spp\+\_\+server\+\_\+demo.\+c.
+

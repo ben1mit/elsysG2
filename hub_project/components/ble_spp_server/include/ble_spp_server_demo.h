@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief ble_spp_server_demo, a library for recieving data to be relayed on the hub 
+ * largely based on the example from espressif found at esp-idf/examples/bluetooth/bluedroid/ble/ble_spp_server 
+ */ 
+
 /*
    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -54,4 +60,11 @@ enum{
 #define SEND_IMMEDIATELY true //if this is the case we assume only a single digit is recieved, and no parsing needed
                             // this controls what kind of sending-function is used.
                             //it should be true if we immediately want to send that digit.
+
+/**
+ * @brief this is the function that handles all bluetooth-related activities on the hub
+ * @note when it recieves data it calls @c my_http_sender_send_turbine if @c SEND_IMMEDIATELY is true and @c fill_my_http_buffer_digit 
+ * with the single digit recieved over BLE as a parameter if @c SEND_IMMEDIATELY is false.
+ * @warning does not initialize nvs, since that is done in @c my_http_sender_init , and thus it is important to call that function first.
+ */ 
 void ble_main(void);
