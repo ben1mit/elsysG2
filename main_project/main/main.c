@@ -7,7 +7,7 @@
  * And a second, called the hub, which relays a signal recieved via BLE to our database via WIFI. \n \n
  * 
  * The documentation for the unit on the wing is found in main_project, and the code for the hub is found in hub_project \n
- * To understand the project, look at the documentation of the header-files and main-files in these projects first \n \n
+ * To understand the project, look at the documentation of the header-files (of the components) and main-files in these projects first \n \n
  * 
  * To run this project a few things must be done: \n
  * download ESP-IDF, this can be done from here: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/.
@@ -15,7 +15,8 @@
  * 
  * You must also edit the file at esp-idf/components/partition_table/partitions_singleapp.csv, here "factory, app" size should be  0x180000 not 1M. \n \n
  * 
- * Menuconfig must be set up correctly: \n
+ * Menuconfig (opened by writing idf.py menuconfig in the terminal) must be set up correctly: \n
+ *
  * -menuconfig on hub_project: \n
  * menuconfig -> example connection configuration, write name and password of the wifi network, 
  * also check that connect using wifi is set here, and not connect using ethernet \n
@@ -47,26 +48,8 @@
 //#include "ble_spp_server_demo.h"
 #include "spp_client_demo.h"
 
-void app_main(void)
-{
-	knock_init();
-
-	int i=0;
-
-	int previous=0;
-	int present=0;
-	while (true)
-	{
-		present=get_dunk_z();
-		printf("%d,", present);
-		previous=get_dunk_z();
-		vTaskDelay(20 / portTICK_PERIOD_MS);
-
-		if(i>100){i=0; printf("\n");}
-	}
-	
-
-	/*
+/*
+	//this section is the functional code inside main for the project (without sleep). 
 	ble_client_app_main();
 
 	vTaskDelay(5000 / portTICK_PERIOD_MS); //necessary for initialization to settle.
@@ -84,7 +67,36 @@ void app_main(void)
 		vTaskDelay(50 / portTICK_PERIOD_MS);
 
 	}
+*/
 
+void app_main(void)
+{
+	knock_init();
+	while(true){
+		printf("%d\n", read_accel_byte());
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
+	}
+	//start_sleep_detection();
+	//printf("f\n");
+
+/*
+	int i=0;
+	int previous=0;
+	int present=0;
+	while (true)
+	{
+		present=get_dunk_z();
+		printf("%d,", present);
+		previous=get_dunk_z();
+		vTaskDelay(20 / portTICK_PERIOD_MS);
+
+		if(i>100){i=0; printf("\n");}
+	}
+	
+*/
+
+
+	/*
 	check_dunk();
 
 

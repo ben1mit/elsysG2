@@ -71,15 +71,15 @@ One which detects bird-collisions at the blade of the windmill, based on vibrati
 And a second, called the hub, which relays a signal recieved via BLE to our database via WIFI. <br  />
  <br  />
  The documentation for the unit on the wing is found in main_project, and the code for the hub is found in hub_project <br  />
-To understand the project, look at the documentation of the header-files and main-files in these projects first <br  />
+To understand the project, look at the documentation of the header-files (of the components) and main-files in these projects first <br  />
  <br  />
  To run this project a few things must be done: <br  />
 download ESP-IDF, this can be done from here: <a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/">https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/</a>. (Building and flashing the project is also decribed there) <br  />
  <br  />
  You must also edit the file at esp-idf/components/partition_table/partitions_singleapp.csv, here "factory, app" size should be 0x180000 not 1M. <br  />
  <br  />
- Menuconfig must be set up correctly: <br  />
--menuconfig on hub_project: <br  />
+ Menuconfig (opened by writing idf.py menuconfig in the terminal) must be set up correctly: <br  />
+ -menuconfig on hub_project: <br  />
 menuconfig -&gt; example connection configuration, write name and password of the wifi network, also check that connect using wifi is set here, and not connect using ethernet <br  />
 menuconfig -&gt; component config -&gt; bluetooth -&gt; check the box (otherwise the project wont compile) <br  />
 menuconfig -&gt; component config -&gt; ESP32-specific -&gt; main XTAL frequency -&gt; select autodetect <br  />

@@ -4,15 +4,15 @@ One which detects bird-\/collisions at the blade of the windmill, based on vibra
 And a second, called the hub, which relays a signal recieved via B\+LE to our database via W\+I\+FI. ~\newline
  ~\newline
  The documentation for the unit on the wing is found in main\+\_\+project, and the code for the hub is found in hub\+\_\+project ~\newline
-To understand the project, look at the documentation of the header-\/files and main-\/files in these projects first ~\newline
+To understand the project, look at the documentation of the header-\/files (of the components) and main-\/files in these projects first ~\newline
  ~\newline
  To run this project a few things must be done\+: ~\newline
 download E\+S\+P-\/\+I\+DF, this can be done from here\+: \href{https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/}{\texttt{ https\+://docs.\+espressif.\+com/projects/esp-\/idf/en/latest/esp32/get-\/started/}}. (Building and flashing the project is also decribed there) ~\newline
  ~\newline
  You must also edit the file at esp-\/idf/components/partition\+\_\+table/partitions\+\_\+singleapp.\+csv, here \char`\"{}factory, app\char`\"{} size should be 0x180000 not 1M. ~\newline
  ~\newline
- Menuconfig must be set up correctly\+: ~\newline
--\/menuconfig on hub\+\_\+project\+: ~\newline
+ Menuconfig (opened by writing idf.\+py menuconfig in the terminal) must be set up correctly\+: ~\newline
+ -\/menuconfig on hub\+\_\+project\+: ~\newline
 menuconfig -\/$>$ example connection configuration, write name and password of the wifi network, also check that connect using wifi is set here, and not connect using ethernet ~\newline
 menuconfig -\/$>$ component config -\/$>$ bluetooth -\/$>$ check the box (otherwise the project wont compile) ~\newline
 menuconfig -\/$>$ component config -\/$>$ E\+S\+P32-\/specific -\/$>$ main X\+T\+AL frequency -\/$>$ select autodetect ~\newline

@@ -21,6 +21,9 @@ extern "C" {
 
 #define CONFIG_MY_MPU_KNOCK_LIMIT 2000
 
+
+
+
 /**
  * @brief initialization function for MPU. 
  */
@@ -36,6 +39,18 @@ int check_dunk();
  * @brief returns raw data of z-acceleration.
  */ 
 int get_dunk_z();
+
+/**
+ * @brief a function for setting the mpu 6050 in sleep mode and initializing 
+ * wake on motion with interruption generation.
+ */
+void start_sleep_detection();
+
+/**
+ * @brief a function for reading bytes describing acceleration directly from mpu registers using i2c. 
+ * This is used as a test-function before using the same principles in ULP-code.
+ */ 
+uint8_t read_accel_byte();
 
 #ifdef __cplusplus
 }
